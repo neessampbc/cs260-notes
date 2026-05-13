@@ -197,7 +197,7 @@ body{background:var(--bg-base);color:var(--text-primary);font-family:var(--font-
   <a href="index.html">Home</a>
   <a href="lecture_apr14_single_cycle_datapath.html">Apr 14</a>
   <a href="lecture_apr16_control_path_immgen_jal.html">Apr 16</a>
-  <a href="lecture_apr21_critical_path_and_multicycle_rtl.html" class="active">Apr 21/23</a>
+  <a href="lecture_apr21_critical_path_and_multicycle_rtl.html" class="active">Apr 21</a>
 </div>
 
 <!-- ════ NAV ════ -->
@@ -209,10 +209,9 @@ body{background:var(--bg-base);color:var(--text-primary);font-family:var(--font-
   <a href="#s4">Stage Registers</a><span class="cs260-nav-sep">·</span>
   <a href="#s5">RTL Basics</a><span class="cs260-nav-sep">·</span>
   <a href="#s6">RTL by Instr</a><span class="cs260-nav-sep">·</span>
-  <a href="#s7">Performance</a><span class="cs260-nav-sep">·</span>
-  <a href="#s8">Figures</a><span class="cs260-nav-sep">·</span>
-  <a href="#s9">Your Notes</a><span class="cs260-nav-sep">·</span>
-  <a href="#s10">HW Context</a>
+  <a href="#s7">Figures</a><span class="cs260-nav-sep">·</span>
+  <a href="#s8">Your Notes</a><span class="cs260-nav-sep">·</span>
+  <a href="#s9">HW Context</a>
 </nav>
 
 <div class="cs260-page-wrapper">
@@ -220,7 +219,7 @@ body{background:var(--bg-base);color:var(--text-primary);font-family:var(--font-
 <!-- ════ HERO ════ -->
 <header class="cs260-hero">
   <div class="cs260-hero-meta">
-    <span class="cs260-badge cs260-badge--date">Apr 21 + Apr 23, 2026</span>
+    <span class="cs260-badge cs260-badge--date">Apr 21, 2026</span>
     <span class="cs260-badge cs260-badge--course">CSCI 260 · Prof. Shankar</span>
     <span class="cs260-badge cs260-badge--ch">§1.6 + §4.5 + App. C</span>
   </div>
@@ -230,7 +229,7 @@ body{background:var(--bg-base);color:var(--text-primary);font-family:var(--font-
     <div class="cs260-meta-item"><div class="cs260-meta-item-label">Video</div><div class="cs260-meta-item-val">37:18 · hmtask06ezlh4tgaots</div></div>
     <div class="cs260-meta-item"><div class="cs260-meta-item-label">Textbook</div><div class="cs260-meta-item-val">§1.6 Perf · §4.5 Multicycle · App. C</div></div>
     <div class="cs260-meta-item"><div class="cs260-meta-item-label">Handouts</div><div class="cs260-meta-item-val">multiData.pdf · multiControl.pdf</div></div>
-    <div class="cs260-meta-item"><div class="cs260-meta-item-label">Your Notes</div><div class="cs260-meta-item-val">5 pages (Apr 21 p1–3,5 · Apr 23 p4)</div></div>
+    <div class="cs260-meta-item"><div class="cs260-meta-item-label">Your Notes</div><div class="cs260-meta-item-val">4 pages (Apr 21 p1–3, p5)</div></div>
   </div>
 </header>
 
@@ -699,39 +698,13 @@ body{background:var(--bg-base);color:var(--text-primary);font-family:var(--font-
 </section>
 
 
+
 <!-- ════════════════════════════════════════
-     §07 — PERFORMANCE ANALYSIS
+     §07 — TEXTBOOK FIGURES (EMBEDDED)
      ════════════════════════════════════════ -->
 <section class="cs260-section" id="s7">
   <div class="cs260-section-header">
     <div class="cs260-section-num">§ 07</div>
-    <h2>Multicycle Performance Analysis<small>Apr 23 content — CPI, clock rate, and MIPS</small></h2>
-  </div>
-
-  <div class="cs260-prose"><p>From Apr 23 notes. Clock rate ignoring the push instruction: <code>1/32 ns ≈ 31 MHz</code>. Control path stability for State 1: <code>max(25, 22) = 25 ns</code> — this dictates the minimum clock cycle when the control logic is on the critical path.</p></div>
-
-  <div class="cs260-perf-box">
-    <div class="comment">// Mix: R-type=70%, lw=10%, sw=5%, beq=15% — CPI: R=4, lw=5, sw=4, beq=3</div>
-    <div class="formula">Avg CPI  =  (4×0.7) + (5×0.1) + (4×0.05) + (3×0.15)</div>
-    <div class="formula">         =  2.8 + 0.5 + 0.2 + 0.45</div>
-    <div class="result">         =  3.95 CPI</div>
-    <br>
-    <div class="formula">Throughput  =  31×10⁶ cycles/s  ÷  3.95 cycles/inst</div>
-    <div class="result">            ≈  7.8 MIPS</div>
-    <div class="comment">  // Note from notes: "ends up being slower than single-cycle (lecture notes)" for this mix</div>
-    <div class="comment">  // Unit cancellation from Ch.1: (cycles/s) ÷ (cycles/inst) = inst/s</div>
-  </div>
-
-  <div class="cs260-exam">Show all three steps: (1) avg CPI from mix, (2) clock rate, (3) MIPS = clock_rate / CPI. Shankar explicitly calls out the unit cancellation — include it.</div>
-</section>
-
-
-<!-- ════════════════════════════════════════
-     §08 — TEXTBOOK FIGURES (EMBEDDED)
-     ════════════════════════════════════════ -->
-<section class="cs260-section" id="s8">
-  <div class="cs260-section-header">
-    <div class="cs260-section-num">§ 08</div>
     <h2>Textbook Figures — From Your Groupchat<small>Three figures shared in class that map directly to this lecture</small></h2>
   </div>
 
@@ -757,12 +730,12 @@ body{background:var(--bg-base);color:var(--text-primary);font-family:var(--font-
 
 
 <!-- ════════════════════════════════════════
-     §09 — YOUR HANDWRITTEN NOTES
+     §08 — YOUR HANDWRITTEN NOTES
      ════════════════════════════════════════ -->
-<section class="cs260-section" id="s9">
+<section class="cs260-section" id="s8">
   <div class="cs260-section-header">
-    <div class="cs260-section-num">§ 09</div>
-    <h2>Your Handwritten Notes<small>Full transcription — all 5 pages</small></h2>
+    <div class="cs260-section-num">§ 08</div>
+    <h2>Your Handwritten Notes<small>Full transcription — 4 pages</small></h2>
   </div>
 
   <div class="cs260-notes-grid">
@@ -823,22 +796,6 @@ body{background:var(--bg-base);color:var(--text-primary);font-family:var(--font-
       </div>
     </div>
 
-    <div class="cs260-note-card">
-      <div class="cs260-note-card-header"><span>Apr 23 — Push + FSM</span><span class="pn">p.4</span></div>
-      <div class="cs260-note-body">
-        <p>"to not make any data path changes"</p>
-        <p><strong>Push register example:</strong> diagram with sp, registers 14/15, cols 11+7, "or RF[2]"</p>
-        <p><strong>7:26:</strong> <code>③ ALUOUT ← sp−4</code></p>
-        <p>"RF[2]←sp−4 — #this would be wrong (more in video)"</p>
-        <p><strong>7:29:</strong> <code>④ RF[IR[11:7]] ← ALUOUT || sp←sp−4</code><br>
-        <code>Mem[ALUOUT] ← B</code></p>
-        <p><strong>7:30 — WRONG WAY:</strong> <code>A←RF[2]</code></p>
-        <p><strong>7:32 — WRONG WAY:</strong> <code>ALUOUT←A // Assume ALU pass-A</code><br>
-        <code>B←RF[IR[24:20]]</code>; <code>Mem[ALUOUT]←B</code></p>
-        <p><strong>FSM state added (bottom diagram):</strong><br>
-        ALUSrcA=1, ALUSrcB=GT, ALUOP=SUB → memtoReg=0, PcgWrite=0, IorD=1, MEMWRITE → back to State 0</p>
-      </div>
-    </div>
 
     <div class="cs260-note-card" style="grid-column:1/-1">
       <div class="cs260-note-card-header"><span>Apr 21 — Timing values + throughput</span><span class="pn">p.5</span></div>
@@ -859,11 +816,11 @@ body{background:var(--bg-base);color:var(--text-primary);font-family:var(--font-
 
 
 <!-- ════════════════════════════════════════
-     §10 — HOMEWORK CONTEXT
+     §09 — HOMEWORK CONTEXT
      ════════════════════════════════════════ -->
-<section class="cs260-section" id="s10">
+<section class="cs260-section" id="s9">
   <div class="cs260-section-header">
-    <div class="cs260-section-num">§ 10</div>
+    <div class="cs260-section-num">§ 09</div>
     <h2>Homework Context<small>HW4 — Multicycle RISC-V (B) — stw instruction</small></h2>
   </div>
 
@@ -872,8 +829,8 @@ body{background:var(--bg-base);color:var(--text-primary);font-family:var(--font-
 
     <div class="cs260-prose">
       <p><strong>How it connects to this lecture:</strong> HW4B asks you to design a new instruction — <code>stw regx, offset(regy)</code> — that stores <code>regx</code> to <em>both</em> <code>offset(regy)</code> and <code>offset+4(regy)</code>. This requires exactly the skills Shankar taught in §06: writing numbered RTL cycles using ALUOUT as the address register, chaining DataMem writes across cycles, and re-using ALUOUT in a subsequent cycle (<code>ALUOUT ← ALUOUT+4</code>).</p>
-      <p>The critical insight this lecture gives you: ALUOUT is a register that persists across clock cycles. The classmate solution below uses this to execute two memory writes in cycles ④ and ⑤ by incrementing ALUOUT between them — exactly the pattern Shankar demonstrated for sw (§06) and the push example (§09 p.4).</p>
-      <p><strong>Which FSM state to add:</strong> From Figure e4.5.12 (§08), you branch from State 2 with a new opcode arc, add states for the two DataMem writes, and return to State 0. The control signals for each write state follow the "Write ALU" row of Figure C.5.1 (§08): <code>MemWrite=1, IorD=1</code>.</p>
+      <p>The critical insight this lecture gives you: ALUOUT is a register that persists across clock cycles. The classmate solution below uses this to execute two memory writes in cycles ④ and ⑤ by incrementing ALUOUT between them — exactly the pattern Shankar demonstrated for sw (§06) and the push-style sequence from lecture.</p>
+      <p><strong>Which FSM state to add:</strong> From Figure e4.5.12 (§07), you branch from State 2 with a new opcode arc, add states for the two DataMem writes, and return to State 0. The control signals for each write state follow the "Write ALU" row of Figure C.5.1 (§07): <code>MemWrite=1, IorD=1</code>.</p>
     </div>
 
     <div class="cs260-sub" style="margin-top:18px">Classmate Reference — HW4(B) RTL Solution</div>
@@ -897,10 +854,9 @@ body{background:var(--bg-base);color:var(--text-primary);font-family:var(--font-
   <div>§04 Stage Registers ......... IR, A, B, ALUOUT, MDR; hatched=sequential</div>
   <div>§05 RTL Basics .............. Number every cycle. Left←right. Assertible=0, X otherwise.</div>
   <div>§06 RTL by Instruction ...... ①② shared; R=4c, lw=5c, sw=4c, beq=3c</div>
-  <div>§07 Performance ............. CR=31MHz; CPI=3.95; 7.8 MIPS</div>
-  <div>§08 Figures ................. Fig C.5.1 (microcode→signals) + Fig e4.5.12 (FSM)</div>
-  <div>§09 Your Notes .............. All 5 pages transcribed</div>
-  <div>§10 HW Context .............. HW4B stw — applies ALUOUT persistence + two DataMem writes</div>
+  <div>§07 Figures ................. Fig C.5.1 (microcode→signals) + Fig e4.5.12 (FSM)</div>
+  <div>§08 Your Notes .............. 4 pages transcribed (Apr 21)</div>
+  <div>§09 HW Context .............. HW4B stw — applies ALUOUT persistence + two DataMem writes</div>
   <div style="margin-top:14px;color:var(--text-muted)">lecture_apr21_critical_path_and_multicycle_rtl.html · neessammoustafa/dev/cs260/</div>
 </footer>
 
