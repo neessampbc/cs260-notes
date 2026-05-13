@@ -10,10 +10,17 @@
     :root{--bg:#0a0c0f;--card:#151a22;--border:#223047;--text:#e8edf5;--muted:#8b9ab0;--green:#00ff88;--blue:#4488ff;--amber:#ffb300;--font-d:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;--font-m:'IBM Plex Mono',monospace;}
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.6}
+    .site-nav{background:rgba(10,12,15,.96);border-bottom:1px solid var(--border);padding:8px 24px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:var(--font-m);font-size:11px;position:sticky;top:0;z-index:50}
+    .site-nav-label{color:var(--blue);font-weight:700;margin-right:8px;text-transform:uppercase;letter-spacing:.07em}
+    .site-nav a{color:var(--muted);text-decoration:none;padding:4px 9px;border-radius:999px;border:1px solid transparent;transition:.15s}
+    .site-nav a:hover{color:var(--green);border-color:rgba(0,255,136,.25);background:rgba(0,255,136,.08)}
+    .site-nav a.active{color:var(--green);border-color:rgba(0,255,136,.35);background:rgba(0,255,136,.1)}
     .wrap{max-width:1050px;margin:0 auto;padding:42px 24px 70px}
     .tag{display:inline-block;font-family:var(--font-m);font-size:11px;color:var(--green);background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.3);padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.08em}
     h1{font-family:var(--font-d);font-size:clamp(30px,5vw,52px);margin:14px 0 10px;line-height:1.05}
-    .sub{max-width:760px;color:var(--muted);font-size:16px;margin-bottom:30px}
+    .sub{max-width:760px;color:var(--muted);font-size:16px;margin-bottom:36px}
+    .section{margin-top:8px}
+    .section-title{font-family:var(--font-d);font-size:clamp(20px,2.5vw,26px);font-weight:700;color:var(--text);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
     .card{display:block;text-decoration:none;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;transition:.18s}
     .card:hover{transform:translateY(-2px);border-color:rgba(0,255,136,.42);background:#1a2030}
@@ -24,39 +31,55 @@
     .pill{font-family:var(--font-m);font-size:10px;padding:2px 8px;border-radius:999px;border:1px solid}
     .p1{color:var(--blue);border-color:rgba(68,136,255,.35);background:rgba(68,136,255,.08)}
     .p2{color:var(--amber);border-color:rgba(255,179,0,.35);background:rgba(255,179,0,.08)}
-    .footer{margin-top:28px;color:#6f8099;font-family:var(--font-m);font-size:11px}
   </style>
 </head>
 <body>
+  <nav class="site-nav" aria-label="Course pages">
+    <span class="site-nav-label">Course Pages</span>
+    <a href="index.html" class="active">Home</a>
+    <a href="lecture_apr14_single_cycle_datapath.html">Apr 14</a>
+    <a href="lecture_apr16_control_path_immgen_jal.html">Apr 16</a>
+    <a href="lecture_apr21_critical_path_and_multicycle_rtl.html">Apr 21</a>
+    <a href="lecture_apr23_push_rtl_critical_path_fsm.html">Apr 23</a>
+  </nav>
+
   <main class="wrap">
     <span class="tag">CSCI 260</span>
     <h1>Computer Architecture<br>Notes Hub</h1>
-    <p class="sub">Central landing page for your lecture notes. Add each new lecture as another card and keep each page linked through the top "Course Pages" nav.</p>
+    <p class="sub">Central landing page for your lecture notes. Add each new lecture as another card and keep each page linked through the top &ldquo;Course Pages&rdquo; nav.</p>
 
-    <section class="grid">
-      <a class="card" href="lecture_apr14_single_cycle_datapath.html">
-        <div class="date">Apr 14, 2026</div>
-        <div class="title">Single-Cycle Datapath</div>
-        <p class="desc">CPU design philosophy, combinational vs sequential logic, fetch/R-type/lw/sw/beq flow, and control signals.</p>
-        <div class="pillrow"><span class="pill p1">Datapath</span><span class="pill p2">Control</span></div>
-      </a>
+    <section class="section" aria-labelledby="lecture-notes-heading">
+      <h2 class="section-title" id="lecture-notes-heading">Lecture notes</h2>
+      <div class="grid">
+        <a class="card" href="lecture_apr14_single_cycle_datapath.html">
+          <div class="date">Apr 14, 2026</div>
+          <div class="title">Single-Cycle Datapath</div>
+          <p class="desc">CPU design philosophy, combinational vs sequential logic, fetch/R-type/lw/sw/beq flow, and control signals.</p>
+          <div class="pillrow"><span class="pill p1">Datapath</span><span class="pill p2">Control</span></div>
+        </a>
 
-      <a class="card" href="lecture_apr16_control_path_immgen_jal.html">
-        <div class="date">Apr 16, 2026</div>
-        <div class="title">Control Path + ImmGen + JAL</div>
-        <p class="desc">Opcode decoding, immediate generation for multiple instruction formats, and datapath extension for JAL/push.</p>
-        <div class="pillrow"><span class="pill p1">ImmGen</span><span class="pill p2">JAL</span></div>
-      </a>
+        <a class="card" href="lecture_apr16_control_path_immgen_jal.html">
+          <div class="date">Apr 16, 2026</div>
+          <div class="title">Control Path + ImmGen + JAL</div>
+          <p class="desc">Opcode decoding, immediate generation for multiple instruction formats, and datapath extension for JAL/push.</p>
+          <div class="pillrow"><span class="pill p1">ImmGen</span><span class="pill p2">JAL</span></div>
+        </a>
 
-      <a class="card" href="lecture_apr21_critical_path_and_multicycle_rtl.html">
-        <div class="date">Apr 21, 2026</div>
-        <div class="title">Critical Path + Multicycle RTL</div>
-        <p class="desc">Critical path timing analysis, motivation for multicycle design, stage registers, and RTL patterns by instruction.</p>
-        <div class="pillrow"><span class="pill p1">Performance</span><span class="pill p2">RTL</span></div>
-      </a>
+        <a class="card" href="lecture_apr21_critical_path_and_multicycle_rtl.html">
+          <div class="date">Apr 21, 2026</div>
+          <div class="title">Critical Path + Multicycle RTL</div>
+          <p class="desc">Critical path timing analysis, motivation for multicycle design, stage registers, and RTL patterns by instruction.</p>
+          <div class="pillrow"><span class="pill p1">Performance</span><span class="pill p2">RTL</span></div>
+        </a>
+
+        <a class="card" href="lecture_apr23_push_rtl_critical_path_fsm.html">
+          <div class="date">Apr 23, 2026</div>
+          <div class="title">Push RTL, Critical Path &amp; FSM</div>
+          <p class="desc">Push instruction RTL, ALUOUT and memory timing, new FSM states, multicycle critical path, and throughput.</p>
+          <div class="pillrow"><span class="pill p1">Push</span><span class="pill p2">FSM</span></div>
+        </a>
+      </div>
     </section>
-
-    <p class="footer">Tip: duplicate a lecture HTML file, update title/date card text here, and keep the shared Course Pages nav in place.</p>
   </main>
 </body>
 </html>
