@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS260 Notes Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0a0c0f;--card:#151a22;--border:#223047;--text:#e8edf5;--muted:#8b9ab0;--green:#00ff88;--blue:#4488ff;--amber:#ffb300;--font-d:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;--font-m:'IBM Plex Mono',monospace;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.6}
+    .wrap{max-width:1050px;margin:0 auto;padding:42px 24px 70px}
+    .tag{display:inline-block;font-family:var(--font-m);font-size:11px;color:var(--green);background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.3);padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.08em}
+    h1{font-family:var(--font-d);font-size:clamp(30px,5vw,52px);margin:14px 0 10px;line-height:1.05}
+    .sub{max-width:760px;color:var(--muted);font-size:16px;margin-bottom:30px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+    .card{display:block;text-decoration:none;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;transition:.18s}
+    .card:hover{transform:translateY(-2px);border-color:rgba(0,255,136,.42);background:#1a2030}
+    .date{font-family:var(--font-m);font-size:11px;color:var(--green);text-transform:uppercase;letter-spacing:.07em}
+    .title{font-family:var(--font-d);font-size:24px;color:var(--text);margin-top:8px;line-height:1.1}
+    .desc{color:var(--muted);font-size:14px;margin-top:10px}
+    .pillrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+    .pill{font-family:var(--font-m);font-size:10px;padding:2px 8px;border-radius:999px;border:1px solid}
+    .p1{color:var(--blue);border-color:rgba(68,136,255,.35);background:rgba(68,136,255,.08)}
+    .p2{color:var(--amber);border-color:rgba(255,179,0,.35);background:rgba(255,179,0,.08)}
+    .footer{margin-top:28px;color:#6f8099;font-family:var(--font-m);font-size:11px}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <span class="tag">CSCI 260</span>
+    <h1>Computer Architecture<br>Notes Hub</h1>
+    <p class="sub">Central landing page for your lecture notes. Add each new lecture as another card and keep each page linked through the top "Course Pages" nav.</p>
+
+    <section class="grid">
+      <a class="card" href="lecture_apr14_single_cycle_datapath.html">
+        <div class="date">Apr 14, 2026</div>
+        <div class="title">Single-Cycle Datapath</div>
+        <p class="desc">CPU design philosophy, combinational vs sequential logic, fetch/R-type/lw/sw/beq flow, and control signals.</p>
+        <div class="pillrow"><span class="pill p1">Datapath</span><span class="pill p2">Control</span></div>
+      </a>
+
+      <a class="card" href="lecture_apr16_control_path_immgen_jal.html">
+        <div class="date">Apr 16, 2026</div>
+        <div class="title">Control Path + ImmGen + JAL</div>
+        <p class="desc">Opcode decoding, immediate generation for multiple instruction formats, and datapath extension for JAL/push.</p>
+        <div class="pillrow"><span class="pill p1">ImmGen</span><span class="pill p2">JAL</span></div>
+      </a>
+
+      <a class="card" href="lecture_apr21_critical_path_and_multicycle_rtl.html">
+        <div class="date">Apr 21/23, 2026</div>
+        <div class="title">Critical Path + Multicycle RTL</div>
+        <p class="desc">Critical path timing analysis, motivation for multicycle design, stage registers, and RTL patterns by instruction.</p>
+        <div class="pillrow"><span class="pill p1">Performance</span><span class="pill p2">RTL</span></div>
+      </a>
+    </section>
+
+    <p class="footer">Tip: duplicate a lecture HTML file, update title/date card text here, and keep the shared Course Pages nav in place.</p>
+  </main>
+</body>
+</html>
