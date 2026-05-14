@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundations — Hardware Prerequisites | CS260 Shankar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1e1b4b;
+  --indigo: #3730a3;
+  --blue: #4f46e5;
+  --teal: #0d9488;
+  --orange: #ea580c;
+  --red: #dc2626;
+  --green: #16a34a;
+  --yellow: #ca8a04;
+  --bg: #f8f7f4;
+  --card: #ffffff;
+  --text: #1a1a2e;
+  --muted: #6b6b80;
+  --border: #e2e0f0;
+  --slide-blue: #3730a3;
+  --slide-orange: #ea580c;
+  --slide-teal: #0d9488;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color: var(--text); font-size: 17px; line-height: 1.7; }
+
+/* ── NAV (in-page) ── */
+.page-nav { background: white; border-bottom: 1px solid var(--border); padding: 8px 24px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; position: sticky; top: 82px; z-index: 150; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.page-nav span { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-right: 4px; }
+.page-nav a { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--indigo); text-decoration: none; padding: 3px 8px; border-radius: 3px; }
+.page-nav a:hover { background: #eef2ff; }
+
+/* ── HERO ── */
+.hero { background: linear-gradient(135deg, var(--navy) 0%, #312e81 60%, #1e3a5f 100%); color: white; padding: 52px 24px 44px; }
+.hero-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: #a5b4fc; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px; display: flex; gap: 16px; flex-wrap: wrap; }
+.hero h1 { font-size: clamp(28px, 5vw, 46px); font-weight: 700; line-height: 1.15; margin-bottom: 14px; }
+.hero h1 span { color: #fbbf24; }
+.hero p { font-size: 17px; color: #c7d2fe; max-width: 680px; line-height: 1.6; }
+.hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+.tag { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; letter-spacing: .05em; }
+.tag-hw { background: #1e3a5f; color: #93c5fd; }
+.tag-tb { background: #1e3a5f; color: #86efac; }
+.tag-exam { background: #7f1d1d; color: #fca5a5; }
+
+/* ── LAYOUT ── */
+.container { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+.progress-bar { height: 4px; background: var(--border); margin: 24px 0 0; border-radius: 2px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--teal)); border-radius: 2px; transition: width .3s; }
+
+/* ── SECTION ── */
+.section { margin-top: 56px; }
+.section-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--border); }
+.section-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 4px; padding: 4px 8px; white-space: nowrap; margin-top: 4px; }
+.section-title { font-size: 26px; font-weight: 700; color: var(--navy); line-height: 1.2; }
+.section-sub { font-size: 13px; font-family: 'Inter', sans-serif; color: var(--muted); margin-top: 4px; }
+.source-badge { font-family: 'DM Mono', monospace; font-size: 10px; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; border-radius: 3px; padding: 2px 7px; }
+
+/* ── CONTENT BLOCKS ── */
+p { margin-bottom: 14px; }
+.callout { border-left: 4px solid var(--blue); background: #eef2ff; padding: 14px 18px; border-radius: 0 6px 6px 0; margin: 18px 0; }
+.callout.exam { border-color: var(--red); background: #fff1f2; }
+.callout.exam::before { content: "🎯 EXAM FLAG — "; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--red); font-weight: 600; display: block; margin-bottom: 6px; }
+.callout.tip { border-color: var(--teal); background: #f0fdfa; }
+.callout.tip::before { content: "💡 Shankar's Framing — "; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--teal); font-weight: 600; display: block; margin-bottom: 6px; }
+.callout.warn { border-color: var(--orange); background: #fff7ed; }
+.callout.warn::before { content: "⚠ Common Mistake — "; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--orange); font-weight: 600; display: block; margin-bottom: 6px; }
+
+/* ── SLIDE EMBED ── */
+.slide-ref { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 20px 0; }
+.slide-ref-header { background: var(--navy); color: #c7d2fe; font-family: 'DM Mono', monospace; font-size: 11px; padding: 6px 14px; display: flex; justify-content: space-between; }
+.slide-ref img { width: 100%; display: block; }
+
+/* ── DIAGRAMS ── */
+.diagram-wrap { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; overflow-x: auto; }
+.diagram-caption { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--muted); margin-top: 10px; text-align: center; }
+
+/* ── TABLES ── */
+table { width: 100%; border-collapse: collapse; font-family: 'DM Mono', monospace; font-size: 13px; margin: 16px 0; }
+th { background: var(--navy); color: white; padding: 8px 12px; text-align: left; }
+td { padding: 7px 12px; border-bottom: 1px solid var(--border); }
+tr:nth-child(even) td { background: #fafafa; }
+tr.highlight td { background: #fef9c3; font-weight: 600; }
+
+/* ── INTERACTIVE ELEMENTS ── */
+.interactive-gate { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 20px; }
+.gate-controls { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.toggle-btn { font-family: 'DM Mono', monospace; font-size: 14px; width: 44px; height: 44px; border: 2px solid var(--indigo); border-radius: 6px; background: white; color: var(--indigo); cursor: pointer; font-weight: 700; transition: all .15s; }
+.toggle-btn.active { background: var(--indigo); color: white; }
+.gate-output { font-family: 'DM Mono', monospace; font-size: 28px; font-weight: 700; padding: 12px 24px; border-radius: 8px; min-width: 80px; text-align: center; transition: all .2s; }
+.gate-output.one { background: #d1fae5; color: #065f46; border: 2px solid #6ee7b7; }
+.gate-output.zero { background: #fee2e2; color: #7f1d1d; border: 2px solid #fca5a5; }
+
+/* ── MUX INTERACTIVE ── */
+.mux-demo { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; align-items: center; padding: 20px; }
+.mux-inputs { display: flex; flex-direction: column; gap: 8px; }
+.mux-input-row { display: flex; align-items: center; gap: 10px; font-family: 'DM Mono', monospace; font-size: 13px; }
+.mux-input-row label { width: 30px; color: var(--muted); }
+.bit-input { width: 44px; height: 36px; border: 2px solid var(--border); border-radius: 4px; text-align: center; font-family: 'DM Mono', monospace; font-size: 16px; font-weight: 700; cursor: pointer; transition: all .15s; }
+.bit-input:hover { border-color: var(--indigo); }
+.sel-row { display: flex; align-items: center; gap: 10px; font-family: 'DM Mono', monospace; font-size: 12px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+
+/* ── QUIZ ── */
+.quiz-section { background: #1e1b4b; color: white; border-radius: 10px; padding: 24px; margin: 36px 0; }
+.quiz-header { font-family: 'DM Mono', monospace; font-size: 10px; color: #a5b4fc; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 16px; }
+.quiz-q { margin-bottom: 24px; }
+.quiz-q-text { font-size: 16px; font-weight: 600; color: #e0e7ff; margin-bottom: 12px; line-height: 1.5; }
+.quiz-q-source { font-family: 'DM Mono', monospace; font-size: 10px; color: #6366f1; margin-bottom: 10px; }
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt { background: #312e81; border: 1px solid #4338ca; border-radius: 6px; padding: 10px 14px; cursor: pointer; font-size: 14px; color: #c7d2fe; transition: all .15s; font-family: 'Inter', sans-serif; text-align: left; width: 100%; }
+.quiz-opt:hover { background: #3730a3; border-color: #6366f1; }
+.quiz-opt.correct { background: #14532d; border-color: #22c55e; color: #bbf7d0; }
+.quiz-opt.wrong { background: #7f1d1d; border-color: #ef4444; color: #fecaca; }
+.quiz-opt.reveal { background: #1a3a2a; border-color: #22c55e; color: #86efac; }
+.quiz-feedback { display: none; margin-top: 10px; padding: 10px 14px; border-radius: 6px; font-size: 13px; font-family: 'Inter', sans-serif; line-height: 1.5; }
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct { background: #14532d; color: #bbf7d0; }
+.quiz-feedback.wrong { background: #7f1d1d; color: #fecaca; }
+.fill-input { width: 100%; background: #312e81; border: 1px solid #4338ca; border-radius: 6px; padding: 10px 14px; font-size: 14px; color: white; font-family: 'DM Mono', monospace; outline: none; }
+.fill-input:focus { border-color: #818cf8; }
+.quiz-check-btn { background: #4f46e5; color: white; border: none; border-radius: 6px; padding: 9px 18px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+.quiz-check-btn:hover { background: #4338ca; }
+.tf-area { width: 100%; background: #312e81; border: 1px solid #4338ca; border-radius: 6px; padding: 10px 14px; font-size: 14px; color: #c7d2fe; font-family: 'Crimson Pro', serif; resize: vertical; min-height: 80px; outline: none; }
+.quiz-score { text-align: center; padding: 16px; font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; color: #fbbf24; }
+
+/* ── RESOURCES ── */
+.resources { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin: 24px 0; }
+.resources h4 { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+.resource-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 14px; }
+.resource-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+.resource-item a { color: var(--blue); text-decoration: none; font-weight: 600; }
+.resource-item a:hover { text-decoration: underline; }
+.resource-note { color: var(--muted); font-family: 'Inter', sans-serif; font-size: 12px; margin-top: 2px; }
+
+/* ── MOCK EXAM ── */
+.mock-exam { border: 2px solid var(--orange); border-radius: 10px; padding: 28px; margin-top: 56px; }
+.mock-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.mock-badge { background: var(--orange); color: white; font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 4px; letter-spacing: .08em; }
+.mock-title { font-size: 22px; font-weight: 700; color: var(--navy); }
+.mock-q { border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-bottom: 16px; }
+.mock-q-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-bottom: 8px; }
+.mock-q-text { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+.reveal-btn { background: transparent; border: 1px solid var(--indigo); color: var(--indigo); border-radius: 4px; padding: 6px 14px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+.reveal-btn:hover { background: #eef2ff; }
+.reveal-answer { display: none; background: #f0fdf4; border-left: 3px solid var(--green); padding: 12px 14px; border-radius: 0 4px 4px 0; margin-top: 10px; font-size: 14px; color: #14532d; line-height: 1.6; }
+.reveal-answer.show { display: block; }
+
+/* ── ELEMENT CLASSIFIER ── */
+.classifier { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin: 20px 0; }
+.classifier h4 { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 14px; color: var(--navy); }
+.classify-items { display: flex; flex-direction: column; gap: 8px; }
+.classify-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.classify-label { font-family: 'DM Mono', monospace; font-size: 13px; flex: 1; min-width: 120px; }
+.classify-btn { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; padding: 5px 14px; border-radius: 4px; border: 1.5px solid; cursor: pointer; transition: all .15s; }
+.classify-btn.comb { border-color: var(--blue); color: var(--blue); background: white; }
+.classify-btn.seq { border-color: var(--orange); color: var(--orange); background: white; }
+.classify-btn:hover { opacity: .8; }
+.classify-btn.correct-comb { background: #eff6ff; border-color: var(--blue); }
+.classify-btn.correct-seq { background: #fff7ed; border-color: var(--orange); }
+.classify-btn.wrong { background: #fee2e2; border-color: var(--red); color: var(--red); }
+.classify-result { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+
+/* CS260 hub chrome — matches lecture notes (dark strip above page) */
+.cs260-site-nav { position: sticky; top: 43px; z-index: 190; background: rgba(10,12,15,.96); border-bottom: 1px solid #1e2838; padding: 8px 24px; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 11px; backdrop-filter: blur(8px); }
+.cs260-site-nav-label { color: #4488ff; font-weight: 700; margin-right: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: .07em; }
+.cs260-site-nav a { color: #8b9ab0; text-decoration: none; padding: 4px 9px; border-radius: 999px; border: 1px solid transparent; transition: all .15s; }
+.cs260-site-nav a:hover { color: #00ff88; border-color: rgba(0,255,136,.25); background: rgba(0,255,136,.08); }
+.cs260-site-nav a.active { color: #00ff88; border-color: rgba(0,255,136,.35); background: rgba(0,255,136,.1); }
+.cs260-source-bar { position: sticky; top: 0; z-index: 200; background: rgba(0,255,136,.07); border-bottom: 1px solid rgba(0,255,136,.18); padding: 9px 24px; display: flex; gap: 10px 14px; align-items: center; flex-wrap: wrap; backdrop-filter: blur(10px); }
+.cs260-source-bar-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(0,255,136,.5); text-transform: uppercase; letter-spacing: .08em; margin-right: 4px; }
+.cs260-src-link { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; border: 1px solid; border-radius: 20px; padding: 4px 14px; transition: all .15s; }
+.cs260-src-link--yt { color: #00ff88; border-color: rgba(0,255,136,.3); }
+.cs260-src-link--yt:hover { background: rgba(0,255,136,.1); }
+.cs260-src-link--wayin { color: #4488ff; border-color: rgba(68,136,255,.3); }
+.cs260-src-link--wayin:hover { background: rgba(68,136,255,.1); }
+.cs260-source-inline { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(232,237,245,.62); max-width: 520px; line-height: 1.45; }
+</style>
+</head>
+<body>
+
+<div class="cs260-source-bar">
+  <span class="cs260-source-bar-label">Sources</span>
+  <span class="cs260-source-inline">hw.pdf — Shankar&rsquo;s 160 review slides (10 slides, Mar 26)</span>
+  <a href="lecture_apr14_single_cycle_datapath.html" class="cs260-src-link cs260-src-link--wayin">Apr 14 lecture notes</a>
+  <span class="cs260-source-inline">Textbook §4.1–4.2 (Patterson &amp; Hennessy, RISC-V 2nd ed.) · App. A.1–A.3, A.7–A.11</span>
+</div>
+
+<div class="cs260-site-nav" aria-label="Site navigation">
+  <span class="cs260-site-nav-label">Course Pages</span>
+  <a href="index.html">Home</a>
+  <a href="foundations_hardware_prereqs.html" class="active">Foundations</a>
+  <a href="lecture_apr14_single_cycle_datapath.html">Apr 14</a>
+  <a href="lecture_apr16_control_path_immgen_jal.html">Apr 16</a>
+  <a href="lecture_apr21_critical_path_and_multicycle_rtl.html">Apr 21</a>
+  <a href="lecture_apr23_push_rtl_critical_path_fsm.html">Apr 23</a>
+</div>
+
+<!-- Page nav -->
+<nav class="page-nav">
+  <span>CS260</span>
+  <a href="#s1">3 Classes</a>·
+  <a href="#s2">Gates</a>·
+  <a href="#s3">MUX/ALU</a>·
+  <a href="#s4">Sequential</a>·
+  <a href="#s5">Theorems</a>·
+  <a href="#s6">Processor Intro</a>·
+  <a href="#s7">Quizzes</a>·
+  <a href="#s8">Mock Exam</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-meta">
+    <span>Mar 26, 2026</span>
+    <span>CSCI 260 · Prof. Shankar</span>
+    <span>App. A.1–A.3, A.7–A.11 · §4.1–4.2</span>
+  </div>
+  <h1>Foundations — <span>Hardware Prerequisites</span></h1>
+  <p>The elements you need to know cold before touching a single-cycle datapath. Gates, MUXes, ALUs, flip-flops, register files, and the clocking model that makes it all tick.</p>
+  <div class="hero-tags">
+    <span class="tag tag-hw">hw.pdf — Shankar Slides</span>
+    <span class="tag tag-tb">Textbook §4.1–4.2</span>
+    <span class="tag tag-exam">Exam 2 Foundation</span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+  <!-- ══════════════════════════════════════
+       §01 — Three Classes
+  ══════════════════════════════════════ -->
+  <section class="section" id="s1">
+    <div class="section-header">
+      <div class="section-num">§ 01</div>
+      <div>
+        <div class="section-title">The Three Hardware Element Classes</div>
+        <div class="section-sub">hw.pdf Slide 5 · App. A.1 · "What are the building blocks?"</div>
+      </div>
+      <span class="source-badge">hw.pdf</span>
+    </div>
+
+    <p>Every single component in a RISC-V processor falls into exactly one of three classes. Getting these categories straight is the prerequisite for understanding <em>why</em> the datapath looks the way it does.</p>
+
+    <div class="slide-ref">
+      <div class="slide-ref-header"><span>hw.pdf — Slide 5 · Classes of Hardware Elements</span><span>3/10</span></div>
+      <div class="diagram-wrap" style="border:0;border-radius:0;padding:0;">
+        <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:700px">
+          <rect width="700" height="240" fill="#1e1b4b"/>
+          <!-- Title bar -->
+          <rect width="700" height="40" fill="#3730a3"/>
+          <text x="20" y="26" font-family="Inter,sans-serif" font-size="16" fill="white" font-weight="600">Classes of Hardware Elements</text>
+          <!-- Box 1 -->
+          <rect x="20" y="55" width="200" height="165" rx="6" fill="#312e81" stroke="#6366f1" stroke-width="1.5"/>
+          <text x="30" y="78" font-family="Inter,sans-serif" font-size="11" fill="#a5b4fc" font-weight="700">① CONNECTORS</text>
+          <text x="30" y="100" font-family="Inter,sans-serif" font-size="12" fill="#c7d2fe">Elements that connect</text>
+          <text x="30" y="116" font-family="Inter,sans-serif" font-size="12" fill="#c7d2fe">other elements.</text>
+          <text x="30" y="145" font-family="DM Mono,monospace" font-size="11" fill="#818cf8">Wires, buses</text>
+          <text x="30" y="162" font-family="DM Mono,monospace" font-size="11" fill="#818cf8">No logic — just routes</text>
+          <text x="30" y="190" font-family="Inter,sans-serif" font-size="11" fill="#6366f1">Not clocked</text>
+          <!-- Box 2 -->
+          <rect x="245" y="55" width="200" height="165" rx="6" fill="#1e3a5f" stroke="#0ea5e9" stroke-width="1.5"/>
+          <text x="255" y="78" font-family="Inter,sans-serif" font-size="11" fill="#7dd3fc" font-weight="700">② COMBINATIONAL</text>
+          <text x="255" y="100" font-family="Inter,sans-serif" font-size="12" fill="#bae6fd">Output = f(inputs)</text>
+          <text x="255" y="116" font-family="Inter,sans-serif" font-size="12" fill="#bae6fd">No memory / state.</text>
+          <text x="255" y="145" font-family="DM Mono,monospace" font-size="11" fill="#38bdf8">Gates, MUX, ALU,</text>
+          <text x="255" y="162" font-family="DM Mono,monospace" font-size="11" fill="#38bdf8">Adder, ImmGen</text>
+          <text x="255" y="190" font-family="Inter,sans-serif" font-size="11" fill="#0ea5e9">Not clocked</text>
+          <!-- Box 3 -->
+          <rect x="470" y="55" width="210" height="165" rx="6" fill="#3b1a00" stroke="#fb923c" stroke-width="1.5"/>
+          <text x="480" y="78" font-family="Inter,sans-serif" font-size="11" fill="#fdba74" font-weight="700">③ SEQUENTIAL</text>
+          <text x="480" y="100" font-family="Inter,sans-serif" font-size="12" fill="#fed7aa">Output = f(inputs +</text>
+          <text x="480" y="116" font-family="Inter,sans-serif" font-size="12" fill="#fed7aa">current state). Has memory.</text>
+          <text x="480" y="145" font-family="DM Mono,monospace" font-size="11" fill="#fb923c">PC, Register File,</text>
+          <text x="480" y="162" font-family="DM Mono,monospace" font-size="11" fill="#fb923c">Instr RAM, Data RAM</text>
+          <text x="480" y="190" font-family="Inter,sans-serif" font-size="11" fill="#f97316">Clocked (rising edge)</text>
+        </svg>
+        <div class="diagram-caption">Shankar hw.pdf Slide 5 — reproduced. The orange = sequential is the key distinction for diagram notation.</div>
+      </div>
+    </div>
+
+    <div class="callout exam">
+      Combinational elements are <strong>not clocked</strong>. Sequential elements are <strong>almost always clocked</strong> — writes happen on the <strong>rising clock edge</strong>. This is the course convention. Shankar draws sequential elements with <strong>diagonal hash marks</strong> through the box; combinational elements are plain boxes or triangles. You will be asked to identify which is which.
+    </div>
+
+    <div class="callout tip">
+      This is the course's framing question from day 1 of CPU design: "What are the primitive hardware elements?" (160's job). "How do we use them to build a processor?" (260's job). Every datapath question reduces to identifying which elements are present and whether they're combinational or sequential.
+    </div>
+
+    <!-- Classifier game -->
+    <div class="classifier">
+      <h4>Quick Check — Combinational or Sequential?</h4>
+      <div class="classify-items" id="classifyItems">
+        <div class="classify-row">
+          <span class="classify-label">ALU</span>
+          <button class="classify-btn comb" onclick="classify(this,'comb','comb','ALU is combinational — output = f(A, B, ALUOp) only, no stored state.')">Combinational</button>
+          <button class="classify-btn seq" onclick="classify(this,'comb','seq','Wrong — ALU is combinational. It has no stored state.')">Sequential</button>
+          <span class="classify-result" id="res-0"></span>
+        </div>
+        <div class="classify-row">
+          <span class="classify-label">Program Counter (PC)</span>
+          <button class="classify-btn comb" onclick="classify(this,'seq','comb','Wrong — PC holds its value between cycles. It is a register (sequential).')">Combinational</button>
+          <button class="classify-btn seq" onclick="classify(this,'seq','seq','Correct! PC is a 32-bit register that stores the current instruction address. It updates on the rising clock edge.')">Sequential</button>
+          <span class="classify-result" id="res-1"></span>
+        </div>
+        <div class="classify-row">
+          <span class="classify-label">MUX (2:1)</span>
+          <button class="classify-btn comb" onclick="classify(this,'comb','comb','Correct! MUX output depends only on its inputs (In0, In1, Sel) — no stored state.')">Combinational</button>
+          <button class="classify-btn seq" onclick="classify(this,'seq','comb','Wrong — MUX is combinational. It just routes one of its inputs to the output.')">Sequential</button>
+          <span class="classify-result" id="res-2"></span>
+        </div>
+        <div class="classify-row">
+          <span class="classify-label">Register File</span>
+          <button class="classify-btn comb" onclick="classify(this,'seq','comb','Wrong — the register file stores 32 registers. Reads are combinational, but writes are clocked. It is classified as sequential.')">Combinational</button>
+          <button class="classify-btn seq" onclick="classify(this,'seq','seq','Correct! Reads are combinational, but writes are clocked on the rising edge. The stored state (register contents) makes it sequential.')">Sequential</button>
+          <span class="classify-result" id="res-3"></span>
+        </div>
+        <div class="classify-row">
+          <span class="classify-label">PC+4 Adder</span>
+          <button class="classify-btn comb" onclick="classify(this,'comb','comb','Correct! The +4 adder just adds 4 to whatever is fed to it. No memory. Shankar specifically called this out — boxes are combinational!')">Combinational</button>
+          <button class="classify-btn seq" onclick="classify(this,'comb','seq','Wrong — the adder has no stored state. Shankar drew it as a plain triangle. &quot;Boxes are combinational!&quot; was his exact quote.')">Sequential</button>
+          <span class="classify-result" id="res-4"></span>
+        </div>
+        <div class="classify-row">
+          <span class="classify-label">Instruction Memory</span>
+          <button class="classify-btn comb" onclick="classify(this,'seq','comb','Wrong — instruction memory is sequential (hatched box). Even though reads seem instantaneous, it holds state and is treated as sequential by Shankar&apos;s convention.')">Combinational</button>
+          <button class="classify-btn seq" onclick="classify(this,'seq','seq','Correct! Even though the read side of instruction memory behaves combinationally, it is a storage element (sequential, hatched box) per Shankar&apos;s convention.')">Sequential</button>
+          <span class="classify-result" id="res-5"></span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════
+       §02 — Gates
+  ══════════════════════════════════════ -->
+  <section class="section" id="s2">
+    <div class="section-header">
+      <div class="section-num">§ 02</div>
+      <div>
+        <div class="section-title">Primitive Combinational Elements — Gates</div>
+        <div class="section-sub">hw.pdf Slides 6–9 · App. A.2 · "Built from transistors"</div>
+      </div>
+      <span class="source-badge">hw.pdf</span>
+    </div>
+
+    <p>Gates are the transistor-level building blocks. Every other combinational element (MUX, ALU, adder) is built from gates. You need to recognize the symbol, know the truth table, and know the key fact about NAND completeness.</p>
+
+    <div class="callout">
+      <strong>Key fact from hw.pdf Slide 6:</strong> With <em>n</em> bits you can represent 2<sup>n</sup> values. Conversely, you need <em>n</em> bits to pick between 2<sup>n</sup> options. (More precisely: ⌈log₂(k)⌉ bits for k options.) You <strong>cannot connect the outputs of two logic units together</strong> — unless you like to see smoke.
+    </div>
+
+    <!-- Interactive gates -->
+    <div class="diagram-wrap">
+      <h4 style="font-family:Inter,sans-serif;font-size:14px;font-weight:700;color:var(--navy);margin-bottom:16px;">Interactive Gate Simulator — click inputs to toggle 0/1</h4>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
+
+        <!-- AND -->
+        <div style="border:1px solid var(--border);border-radius:8px;padding:16px;">
+          <div style="font-family:DM Mono,monospace;font-size:12px;color:var(--indigo);font-weight:700;margin-bottom:12px;">AND Gate</div>
+          <div class="interactive-gate">
+            <svg viewBox="0 0 140 80" width="140" id="and-svg">
+              <line x1="10" y1="25" x2="50" y2="25" stroke="#4f46e5" stroke-width="2"/>
+              <line x1="10" y1="55" x2="50" y2="55" stroke="#4f46e5" stroke-width="2"/>
+              <rect x="50" y="15" width="40" height="50" rx="0" fill="white" stroke="#4f46e5" stroke-width="2"/>
+              <path d="M 70 15 A 25 25 0 0 1 70 65" fill="white" stroke="#4f46e5" stroke-width="2"/>
+              <line x1="90" y1="40" x2="130" y2="40" stroke="#4f46e5" stroke-width="2"/>
+              <text x="20" y="22" font-family="DM Mono" font-size="13" fill="#4f46e5" font-weight="700" id="and-a-lbl">A=0</text>
+              <text x="20" y="52" font-family="DM Mono" font-size="13" fill="#4f46e5" font-weight="700" id="and-b-lbl">B=0</text>
+              <text x="100" y="36" font-family="DM Mono" font-size="13" fill="#dc2626" font-weight="700" id="and-out-lbl">0</text>
+            </svg>
+            <div class="gate-controls">
+              <button class="toggle-btn" id="and-a" onclick="toggleGate('and')">0</button>
+              <span style="font-family:DM Mono;font-size:18px;align-self:center;color:var(--muted)">AND</span>
+              <button class="toggle-btn" id="and-b" onclick="toggleGate('and',true)">0</button>
+              <span style="font-family:DM Mono;font-size:18px;align-self:center;color:var(--muted)">=</span>
+              <div class="gate-output zero" id="and-result">0</div>
+            </div>
+          </div>
+          <table style="font-size:12px;margin-top:8px;">
+            <tr><th>A</th><th>B</th><th>OUT</th></tr>
+            <tr id="and-r00"><td>0</td><td>0</td><td>0</td></tr>
+            <tr id="and-r01"><td>0</td><td>1</td><td>0</td></tr>
+            <tr id="and-r10"><td>1</td><td>0</td><td>0</td></tr>
+            <tr id="and-r11"><td>1</td><td>1</td><td>1</td></tr>
+          </table>
+        </div>
+
+        <!-- OR -->
+        <div style="border:1px solid var(--border);border-radius:8px;padding:16px;">
+          <div style="font-family:DM Mono,monospace;font-size:12px;color:var(--indigo);font-weight:700;margin-bottom:12px;">OR Gate</div>
+          <div class="interactive-gate">
+            <svg viewBox="0 0 140 80" width="140">
+              <line x1="10" y1="25" x2="45" y2="25" stroke="#4f46e5" stroke-width="2"/>
+              <line x1="10" y1="55" x2="45" y2="55" stroke="#4f46e5" stroke-width="2"/>
+              <path d="M 45 15 Q 65 15 85 40 Q 65 65 45 65 Q 60 40 45 15Z" fill="white" stroke="#4f46e5" stroke-width="2"/>
+              <line x1="85" y1="40" x2="130" y2="40" stroke="#4f46e5" stroke-width="2"/>
+              <text x="18" y="22" font-family="DM Mono" font-size="13" fill="#4f46e5" font-weight="700" id="or-a-lbl">A=0</text>
+              <text x="18" y="52" font-family="DM Mono" font-size="13" fill="#4f46e5" font-weight="700" id="or-b-lbl">B=0</text>
+              <text x="95" y="36" font-family="DM Mono" font-size="13" fill="#dc2626" font-weight="700" id="or-out-lbl">0</text>
+            </svg>
+            <div class="gate-controls">
+              <button class="toggle-btn" id="or-a" onclick="toggleGate('or')">0</button>
+              <span style="font-family:DM Mono;font-size:18px;align-self:center;color:var(--muted)">OR</span>
+              <button class="toggle-btn" id="or-b" onclick="toggleGate('or',true)">0</button>
+              <span style="font-family:DM Mono;font-size:18px;align-self:center;color:var(--muted)">=</span>
+              <div class="gate-output zero" id="or-result">0</div>
+            </div>
+          </div>
+          <table style="font-size:12px;margin-top:8px;">
+            <tr><th>A</th><th>B</th><th>OUT</th></tr>
+            <tr id="or-r00"><td>0</td><td>0</td><td>0</td></tr>
+            <tr id="or-r01"><td>0</td><td>1</td><td>1</td></tr>
+            <tr id="or-r10"><td>1</td><td>0</td><td>1</td></tr>
+            <tr id="or-r11"><td>1</td><td>1</td><td>1</td></tr>
+          </table>
+        </div>
+
+        <!-- NOT -->
+        <div style="border:1px solid var(--border);border-radius:8px;padding:16px;">
+          <div style="font-family:DM Mono,monospace;font-size:12px;color:var(--indigo);font-weight:700;margin-bottom:12px;">NOT Gate (Inverter)</div>
+          <div class="interactive-gate">
+            <svg viewBox="0 0 140 80" width="140">
+              <line x1="10" y1="40" x2="45" y2="40" stroke="#4f46e5" stroke-width="2"/>
+              <polygon points="45,15 85,40 45,65" fill="white" stroke="#4f46e5" stroke-width="2"/>
+              <circle cx="90" cy="40" r="5" fill="white" stroke="#4f46e5" stroke-width="2"/>
+              <line x1="95" y1="40" x2="130" y2="40" stroke="#4f46e5" stroke-width="2"/>
+              <text x="12" y="36" font-family="DM Mono" font-size="13" fill="#4f46e5" font-weight="700" id="not-a-lbl">A=0</text>
+              <text x="96" y="30" font-family="DM Mono" font-size="13" fill="#dc2626" font-weight="700" id="not-out-lbl">1</text>
+            </svg>
+            <div class="gate-controls">
+              <button class="toggle-btn" id="not-a" onclick="toggleGate('not')">0</button>
+              <span style="font-family:DM Mono;font-size:18px;align-self:center;color:var(--muted)">NOT =</span>
+              <div class="gate-output one" id="not-result">1</div>
+            </div>
+          </div>
+          <table style="font-size:12px;margin-top:8px;">
+            <tr><th>A</th><th>OUT</th></tr>
+            <tr id="not-r0"><td>0</td><td>1</td></tr>
+            <tr id="not-r1"><td>1</td><td>0</td></tr>
+          </table>
+        </div>
+
+        <!-- NAND -->
+        <div style="border:1px solid var(--border);border-radius:8px;padding:16px;">
+          <div style="font-family:DM Mono,monospace;font-size:12px;color:var(--teal);font-weight:700;margin-bottom:12px;">NAND Gate ★ Universal</div>
+          <div class="interactive-gate">
+            <svg viewBox="0 0 140 80" width="140">
+              <line x1="10" y1="25" x2="50" y2="25" stroke="#0d9488" stroke-width="2"/>
+              <line x1="10" y1="55" x2="50" y2="55" stroke="#0d9488" stroke-width="2"/>
+              <rect x="50" y="15" width="40" height="50" rx="0" fill="white" stroke="#0d9488" stroke-width="2"/>
+              <path d="M 70 15 A 25 25 0 0 1 70 65" fill="white" stroke="#0d9488" stroke-width="2"/>
+              <circle cx="98" cy="40" r="5" fill="white" stroke="#0d9488" stroke-width="2"/>
+              <line x1="103" y1="40" x2="130" y2="40" stroke="#0d9488" stroke-width="2"/>
+              <text x="14" y="22" font-family="DM Mono" font-size="13" fill="#0d9488" font-weight="700" id="nand-a-lbl">A=0</text>
+              <text x="14" y="52" font-family="DM Mono" font-size="13" fill="#0d9488" font-weight="700" id="nand-b-lbl">B=0</text>
+              <text x="106" y="36" font-family="DM Mono" font-size="13" fill="#dc2626" font-weight="700" id="nand-out-lbl">1</text>
+            </svg>
+            <div class="gate-controls">
+              <button class="toggle-btn" id="nand-a" onclick="toggleGate('nand')">0</button>
+              <span style="font-family:DM Mono;font-size:18px;align-self:center;color:var(--muted)">NAND</span>
+              <button class="toggle-btn" id="nand-b" onclick="toggleGate('nand',true)">0</button>
+              <span style="font-family:DM Mono;font-size:18px;align-self:center;color:var(--muted)">=</span>
+              <div class="gate-output one" id="nand-result">1</div>
+            </div>
+          </div>
+          <table style="font-size:12px;margin-top:8px;">
+            <tr><th>A</th><th>B</th><th>OUT</th></tr>
+            <tr id="nand-r00"><td>0</td><td>0</td><td>1</td></tr>
+            <tr id="nand-r01"><td>0</td><td>1</td><td>1</td></tr>
+            <tr id="nand-r10"><td>1</td><td>0</td><td>1</td></tr>
+            <tr id="nand-r11"><td>1</td><td>1</td><td>0</td></tr>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="callout exam">
+      Shankar's hw.pdf slide 9: Number of transistors is proportional to number of gate inputs. <strong>Fanout is typically limited</strong> (but ignored in this course). Logic minimization (Karnaugh maps, Quine-McCluskey) is used to minimize circuit size — this came up in HW B2.
+    </div>
+
+    <div class="resources">
+      <h4>Resources — Gates</h4>
+      <div class="resource-item"><span class="resource-icon">▶</span><div><a href="https://www.youtube.com/watch?v=OGFZHm5bX_c" target="_blank">Neso Academy — Logic Gates (YouTube)</a><div class="resource-note">Watch 0:00–8:00 for AND/OR/NOT/NAND symbols and truth tables. Best visual explanation of gate behavior.</div></div></div>
+      <div class="resource-item"><span class="resource-icon">🎮</span><div><a href="https://nandgame.com" target="_blank">nandgame.com</a><div class="resource-note">Build everything from NAND gates up. Reinforces the universality theorem from hw.pdf slide 17.</div></div></div>
+      <div class="resource-item"><span class="resource-icon">📖</span><div><a href="#" target="_blank">Textbook App. A.2 — Combinational Logic</a><div class="resource-note">Truth tables, gate symbols, and the "sum of products" form for any combinational circuit.</div></div></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       §03 — MUX / Adder / ALU
+  ══════════════════════════════════════ -->
+  <section class="section" id="s3">
+    <div class="section-header">
+      <div class="section-num">§ 03</div>
+      <div>
+        <div class="section-title">Non-Primitive Combinational Elements</div>
+        <div class="section-sub">hw.pdf Slides 10–12 · App. A.3 · MUX · Adder · ALU</div>
+      </div>
+      <span class="source-badge">hw.pdf</span>
+    </div>
+
+    <p>The datapath uses three non-primitive combinational elements constantly: MUX, Adder, and ALU. Every single-cycle diagram you've seen is just these elements wired together with registers.</p>
+
+    <!-- MUX -->
+    <h3 style="font-size:19px;font-weight:700;color:var(--navy);margin:24px 0 10px;">Multiplexor (MUX)</h3>
+    <p>A MUX routes one of its N inputs to the output based on a <em>select</em> signal. If SEL=0, output = In<sub>0</sub>. If SEL=1, output = In<sub>1</sub>. For a 4:1 MUX you need SEL to be 2 bits wide (2 bits → 4 options).</p>
+
+    <div class="callout exam">
+      The SEL line width is ⌈log₂(N)⌉ bits for an N:1 MUX. A 4:1 MUX needs a 2-bit SEL. This directly maps to the hw.pdf "n bits for 2ⁿ options" fact. Exam questions often ask how wide the control signals on MUXes need to be.
+    </div>
+
+    <!-- Interactive MUX -->
+    <div class="diagram-wrap">
+      <h4 style="font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:12px;">Interactive 4:1 MUX — click bits to toggle</h4>
+      <div class="mux-demo">
+        <div class="mux-inputs">
+          <div class="mux-input-row"><label>In₀</label><button class="bit-input" id="mux-i0" onclick="updateMux()">0</button></div>
+          <div class="mux-input-row"><label>In₁</label><button class="bit-input" id="mux-i1" onclick="updateMux()">1</button></div>
+          <div class="mux-input-row"><label>In₂</label><button class="bit-input" id="mux-i2" onclick="updateMux()">0</button></div>
+          <div class="mux-input-row"><label>In₃</label><button class="bit-input" id="mux-i3" onclick="updateMux()">1</button></div>
+          <div class="sel-row">
+            <label style="width:30px">SEL</label>
+            <button class="bit-input" id="mux-s1" onclick="updateMux()">0</button>
+            <button class="bit-input" id="mux-s0" onclick="updateMux()">0</button>
+            <span style="font-size:11px;color:var(--muted)">= <span id="mux-sel-val">0</span> (binary)</span>
+          </div>
+        </div>
+        <svg viewBox="0 0 180 180" width="180" id="mux-svg">
+          <polygon points="30,10 30,170 150,130 150,50" fill="white" stroke="#4f46e5" stroke-width="2"/>
+          <text x="70" y="95" font-family="Inter" font-size="14" fill="#4f46e5" font-weight="700" text-anchor="middle">MUX</text>
+          <text x="10" y="42" font-family="DM Mono" font-size="11" fill="#4f46e5" id="mux-l0">In₀=0</text>
+          <text x="10" y="82" font-family="DM Mono" font-size="11" fill="#4f46e5" id="mux-l1">In₁=1</text>
+          <text x="10" y="122" font-family="DM Mono" font-size="11" fill="#4f46e5" id="mux-l2">In₂=0</text>
+          <text x="10" y="162" font-family="DM Mono" font-size="11" fill="#4f46e5" id="mux-l3">In₃=1</text>
+          <text x="90" y="175" font-family="DM Mono" font-size="11" fill="#6366f1" id="mux-sel-lbl">SEL=00=0</text>
+          <line x1="150" y1="90" x2="175" y2="90" stroke="#4f46e5" stroke-width="2"/>
+          <text x="155" y="85" font-family="DM Mono" font-size="13" fill="#dc2626" font-weight="700" id="mux-out-lbl">F=0</text>
+        </svg>
+        <div style="font-family:Inter,sans-serif;font-size:14px;color:var(--text);max-width:200px;line-height:1.5;">
+          <div style="margin-bottom:8px;font-weight:600;">Selected input:</div>
+          <div class="gate-output zero" id="mux-result" style="font-size:22px;">In₀ = 0</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:8px;" id="mux-explain">SEL=0b00=0 → output In₀</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALU -->
+    <h3 style="font-size:19px;font-weight:700;color:var(--navy);margin:28px 0 10px;">ALU (Arithmetic Logic Unit)</h3>
+    <p>The ALU is a combinational element that performs one of several operations on two inputs X and Y, selected by <em>ALUOp</em>. It also outputs a <strong>Zero flag</strong> (1 if F=0) used for <code>beq</code>.</p>
+
+    <div class="diagram-wrap">
+      <h4 style="font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;">ALU Operation Selector</h4>
+      <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;align-items:flex-start;">
+        <div>
+          <div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;margin-bottom:8px;color:var(--navy)">Inputs:</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:8px;font-family:DM Mono,monospace;font-size:13px;">
+              X = <input type="number" id="alu-x" value="6" style="width:60px;padding:4px 8px;border:1.5px solid var(--border);border-radius:4px;font-family:DM Mono,monospace;" oninput="updateAlu()">
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-family:DM Mono,monospace;font-size:13px;">
+              Y = <input type="number" id="alu-y" value="3" style="width:60px;padding:4px 8px;border:1.5px solid var(--border);border-radius:4px;font-family:DM Mono,monospace;" oninput="updateAlu()">
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-family:DM Mono,monospace;font-size:13px;">
+              ALUOp:
+              <select id="alu-op" style="padding:4px 8px;border:1.5px solid var(--border);border-radius:4px;font-family:DM Mono,monospace;" onchange="updateAlu()">
+                <option value="add">Add (00)</option>
+                <option value="sub">Sub (01)</option>
+                <option value="and">AND (10)</option>
+                <option value="or">OR (11)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <svg viewBox="0 0 160 180" width="140">
+          <polygon points="10,20 10,160 120,130 120,50" fill="white" stroke="#4f46e5" stroke-width="2"/>
+          <text x="50" y="95" font-family="Inter" font-size="13" fill="#4f46e5" font-weight="700" text-anchor="middle">ALU</text>
+          <text x="14" y="52" font-family="DM Mono" font-size="11" fill="#4f46e5" id="alu-xlbl">X=6</text>
+          <text x="14" y="142" font-family="DM Mono" font-size="11" fill="#4f46e5" id="alu-ylbl">Y=3</text>
+          <line x1="120" y1="88" x2="155" y2="88" stroke="#4f46e5" stroke-width="2"/>
+          <text x="122" y="83" font-family="DM Mono" font-size="12" fill="#dc2626" font-weight="700" id="alu-flbl">F=9</text>
+          <text x="122" y="100" font-family="DM Mono" font-size="10" fill="#6b7280" id="alu-zerolbl">Z=0</text>
+          <text x="50" y="178" font-family="DM Mono" font-size="10" fill="#6366f1" id="alu-oplbl">ALUOp=Add</text>
+        </svg>
+        <div style="font-family:Inter,sans-serif;font-size:14px;">
+          <div style="font-weight:600;margin-bottom:8px;color:var(--navy)">Result:</div>
+          <div class="gate-output zero" id="alu-result" style="font-size:22px;min-width:120px;">F = 9</div>
+          <div style="margin-top:8px;font-family:DM Mono,monospace;font-size:12px;color:var(--muted)">Zero flag: <span id="alu-zero-out">0</span></div>
+          <div style="margin-top:4px;font-size:12px;color:var(--muted);" id="alu-why">6 + 3 = 9</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout exam">
+      The ALU <strong>Zero output</strong> is critical for <code>beq</code>. The control unit ANDs the <em>Branch</em> signal with ALU Zero — only when both are 1 does the PC take the branch target. ALUOp for <code>beq</code> is <strong>01 (subtract)</strong> — because "equal" means "X - Y = 0." This is a common trap: beq looks like addition conceptually but the ALU subtracts.
+    </div>
+
+    <div class="resources">
+      <h4>Resources — MUX / ALU</h4>
+      <div class="resource-item"><span class="resource-icon">▶</span><div><a href="https://www.youtube.com/watch?v=9RIkdb7gHPU" target="_blank">Ben Eater — Building an ALU (YouTube)</a><div class="resource-note">Watch how gates build up into a working ALU. Clarifies why ALU output width matches input width.</div></div></div>
+      <div class="resource-item"><span class="resource-icon">📖</span><div><a href="#" target="_blank">Textbook App. A.3 — Combinational Logic</a><div class="resource-note">MUX implementation from AND/OR gates. Figure A.4 shows a 4:1 MUX schematic.</div></div></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       §04 — Sequential Elements
+  ══════════════════════════════════════ -->
+  <section class="section" id="s4">
+    <div class="section-header">
+      <div class="section-num">§ 04</div>
+      <div>
+        <div class="section-title">Sequential Elements — Registers, Memory, Register File</div>
+        <div class="section-sub">hw.pdf Slides 13–16 · App. A.7–A.8 · Clocked storage</div>
+      </div>
+      <span class="source-badge">hw.pdf</span>
+    </div>
+
+    <p>Sequential elements <em>remember</em> a value across clock cycles. Unlike combinational elements, they don't instantly recompute — they hold their state until the rising clock edge triggers an update.</p>
+
+    <div class="callout">
+      <strong>hw.pdf Slide 13 — How to use a sequential element:</strong><br>
+      <strong>Read location A:</strong> (1) Send A to the address input (assert Read=1 if needed). (2) Read contents from the data output.<br>
+      <strong>Write X to location A:</strong> (1) Send A to address and X to write-data input. (2) Assert Write=1 on the write control signal. The value latches on the rising clock edge.
+    </div>
+
+    <!-- Clock diagram -->
+    <div class="diagram-wrap">
+      <h4 style="font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:12px;">Clock Edge Timing — How Sequential Elements Update</h4>
+      <svg viewBox="0 0 680 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px">
+        <!-- Grid -->
+        <line x1="60" y1="10" x2="60" y2="130" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="180" y1="10" x2="180" y2="130" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="300" y1="10" x2="300" y2="130" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="420" y1="10" x2="420" y2="130" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="540" y1="10" x2="540" y2="130" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,4"/>
+        <!-- Clock -->
+        <text x="10" y="35" font-family="DM Mono" font-size="11" fill="#6b7280">CLK</text>
+        <polyline points="60,45 60,20 180,20 180,45 300,45 300,20 420,20 420,45 540,45 540,20 660,20 660,45" fill="none" stroke="#4f46e5" stroke-width="2"/>
+        <!-- Rising edge markers -->
+        <text x="55" y="60" font-family="DM Mono" font-size="9" fill="#4f46e5">↑</text>
+        <text x="175" y="60" font-family="DM Mono" font-size="9" fill="#4f46e5">↑</text>
+        <text x="295" y="60" font-family="DM Mono" font-size="9" fill="#4f46e5">↑</text>
+        <text x="415" y="60" font-family="DM Mono" font-size="9" fill="#4f46e5">↑</text>
+        <text x="535" y="60" font-family="DM Mono" font-size="9" fill="#4f46e5">↑</text>
+        <!-- PC value -->
+        <text x="10" y="95" font-family="DM Mono" font-size="11" fill="#6b7280">PC</text>
+        <line x1="60" y1="90" x2="180" y2="90" stroke="#ea580c" stroke-width="2"/>
+        <text x="95" y="85" font-family="DM Mono" font-size="10" fill="#ea580c">0x00</text>
+        <line x1="180" y1="70" x2="180" y2="90" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="180" y1="70" x2="300" y2="70" stroke="#ea580c" stroke-width="2"/>
+        <text x="215" y="65" font-family="DM Mono" font-size="10" fill="#ea580c">0x04</text>
+        <line x1="300" y1="50" x2="300" y2="70" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="300" y1="50" x2="420" y2="50" stroke="#ea580c" stroke-width="2"/>
+        <text x="335" y="45" font-family="DM Mono" font-size="10" fill="#ea580c">0x08</text>
+        <line x1="420" y1="30" x2="420" y2="50" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="420" y1="30" x2="540" y2="30" stroke="#ea580c" stroke-width="2"/>
+        <text x="455" y="25" font-family="DM Mono" font-size="10" fill="#ea580c">0x0C</text>
+        <!-- Labels -->
+        <text x="70" y="120" font-family="Inter" font-size="10" fill="#6b7280">Cycle 1</text>
+        <text x="190" y="120" font-family="Inter" font-size="10" fill="#6b7280">Cycle 2</text>
+        <text x="310" y="120" font-family="Inter" font-size="10" fill="#6b7280">Cycle 3</text>
+        <text x="430" y="120" font-family="Inter" font-size="10" fill="#6b7280">Cycle 4</text>
+        <text x="550" y="120" font-family="Inter" font-size="10" fill="#6b7280">...</text>
+        <!-- Annotation -->
+        <text x="85" y="108" font-family="Inter" font-size="10" fill="#4f46e5">PC updates on ↑ edge only</text>
+      </svg>
+      <div class="diagram-caption">PC is a 32-bit sequential register. It holds its value for an entire clock cycle. On each rising edge it latches the new value (PC+4 or branch target).</div>
+    </div>
+
+    <!-- Three elements grid -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:20px 0;">
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:18px;">
+        <div style="font-family:DM Mono,monospace;font-size:11px;color:var(--orange);font-weight:700;margin-bottom:10px;">① REGISTER (hw.pdf Slide 14)</div>
+        <svg viewBox="0 0 200 80" width="180">
+          <rect x="60" y="20" width="80" height="40" fill="white" stroke="#ea580c" stroke-width="2"/>
+          <!-- Hatch marks = sequential -->
+          <line x1="65" y1="20" x2="75" y2="60" stroke="#fde68a" stroke-width="1"/>
+          <line x1="80" y1="20" x2="90" y2="60" stroke="#fde68a" stroke-width="1"/>
+          <line x1="95" y1="20" x2="105" y2="60" stroke="#fde68a" stroke-width="1"/>
+          <line x1="110" y1="20" x2="120" y2="60" stroke="#fde68a" stroke-width="1"/>
+          <line x1="125" y1="20" x2="135" y2="60" stroke="#fde68a" stroke-width="1"/>
+          <text x="82" y="42" font-family="Inter" font-size="10" fill="#ea580c" font-weight="700">REG</text>
+          <line x1="5" y1="40" x2="60" y2="40" stroke="#ea580c" stroke-width="2" marker-end="url(#arr)"/>
+          <text x="8" y="34" font-family="DM Mono" font-size="10" fill="#6b7280">X (data)</text>
+          <line x1="140" y1="40" x2="195" y2="40" stroke="#ea580c" stroke-width="2"/>
+          <text x="148" y="34" font-family="DM Mono" font-size="10" fill="#6b7280">Y (out)</text>
+        </svg>
+        <p style="font-size:13px;margin:8px 0 0;color:var(--text);">On rising clock edge, stores X → Y stays unchanged between edges. Width = number of bits (e.g., 32-bit for PC).</p>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:18px;">
+        <div style="font-family:DM Mono,monospace;font-size:11px;color:var(--orange);font-weight:700;margin-bottom:10px;">② MEMORY (hw.pdf Slide 15)</div>
+        <svg viewBox="0 0 200 100" width="180">
+          <rect x="60" y="10" width="80" height="80" fill="white" stroke="#ea580c" stroke-width="2"/>
+          <line x1="65" y1="10" x2="80" y2="90" stroke="#fde68a" stroke-width="1"/>
+          <line x1="85" y1="10" x2="100" y2="90" stroke="#fde68a" stroke-width="1"/>
+          <line x1="105" y1="10" x2="120" y2="90" stroke="#fde68a" stroke-width="1"/>
+          <line x1="125" y1="10" x2="135" y2="90" stroke="#fde68a" stroke-width="1"/>
+          <text x="80" y="55" font-family="Inter" font-size="10" fill="#ea580c" font-weight="700">MEM</text>
+          <text x="62" y="32" font-family="DM Mono" font-size="9" fill="#ea580c">words×bits</text>
+          <line x1="5" y1="30" x2="60" y2="30" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="6" y="24" font-family="DM Mono" font-size="9" fill="#6b7280">Addr</text>
+          <line x1="5" y1="70" x2="60" y2="70" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="4" y="64" font-family="DM Mono" font-size="9" fill="#6b7280">WrData</text>
+          <line x1="20" y1="85" x2="60" y2="85" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="4" y="90" font-family="DM Mono" font-size="9" fill="#6b7280">Write↑</text>
+          <line x1="140" y1="50" x2="195" y2="50" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="143" y="44" font-family="DM Mono" font-size="9" fill="#6b7280">RdData</text>
+          <line x1="35" y1="10" x2="60" y2="10" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="4" y="8" font-family="DM Mono" font-size="9" fill="#6b7280">Read</text>
+        </svg>
+        <p style="font-size:13px;margin:8px 0 0;color:var(--text);">Characterized by words × bits per word. Read is combinational (output appears immediately). Write is clocked (needs Write=1 + rising edge).</p>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:18px;">
+        <div style="font-family:DM Mono,monospace;font-size:11px;color:var(--orange);font-weight:700;margin-bottom:10px;">③ REGISTER FILE (hw.pdf Slide 16)</div>
+        <svg viewBox="0 0 200 110" width="180">
+          <rect x="60" y="5" width="80" height="100" fill="white" stroke="#ea580c" stroke-width="2"/>
+          <line x1="65" y1="5" x2="80" y2="105" stroke="#fde68a" stroke-width="1"/>
+          <line x1="85" y1="5" x2="100" y2="105" stroke="#fde68a" stroke-width="1"/>
+          <line x1="105" y1="5" x2="120" y2="105" stroke="#fde68a" stroke-width="1"/>
+          <line x1="125" y1="5" x2="135" y2="105" stroke="#fde68a" stroke-width="1"/>
+          <text x="80" y="60" font-family="Inter" font-size="9" fill="#ea580c" font-weight="700">RF (32×32)</text>
+          <line x1="5" y1="20" x2="60" y2="20" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="2" y="14" font-family="DM Mono" font-size="8" fill="#6b7280">ReadReg1</text>
+          <line x1="5" y1="38" x2="60" y2="38" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="2" y="32" font-family="DM Mono" font-size="8" fill="#6b7280">ReadReg2</text>
+          <line x1="5" y1="75" x2="60" y2="75" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="4" y="70" font-family="DM Mono" font-size="8" fill="#6b7280">WriteReg</text>
+          <line x1="5" y1="92" x2="60" y2="92" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="2" y="87" font-family="DM Mono" font-size="8" fill="#6b7280">WriteData</text>
+          <line x1="140" y1="25" x2="195" y2="25" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="143" y="20" font-family="DM Mono" font-size="8" fill="#6b7280">ReadData1</text>
+          <line x1="140" y1="50" x2="195" y2="50" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="143" y="45" font-family="DM Mono" font-size="8" fill="#6b7280">ReadData2</text>
+          <line x1="35" y1="105" x2="60" y2="105" stroke="#6b7280" stroke-width="1.5"/>
+          <text x="5" y="110" font-family="DM Mono" font-size="8" fill="#6b7280">Write↑</text>
+        </svg>
+        <p style="font-size:13px;margin:8px 0 0;color:var(--text);">32 registers × 32 bits. 2 read ports (combinational), 1 write port (clocked). Shankar's name: "called Registers by the text." 5-bit address selects register (2⁵=32).</p>
+      </div>
+
+    </div>
+
+    <div class="callout exam">
+      Register File: 5-bit addresses (because log₂(32) = 5). Why 5 bits? From hw.pdf Fact 1 — you need 5 bits to pick between 32 registers. This connects directly to RISC-V instruction encoding: rs1, rs2, rd fields are all 5 bits wide (IR[19:15], IR[24:20], IR[11:7]).
+    </div>
+
+    <div class="callout warn">
+      A common exam mistake: saying the register file is combinational because "reads are instant." It is classified as <strong>sequential</strong> because it holds state and writes are clocked. The hatched box is the giveaway.
+    </div>
+
+    <div class="resources">
+      <h4>Resources — Sequential Elements</h4>
+      <div class="resource-item"><span class="resource-icon">▶</span><div><a href="https://www.youtube.com/watch?v=I0-izyq6q5s" target="_blank">Ben Eater — How do CPUs read memory? (YouTube)</a><div class="resource-note">Shows registers and memory interfacing at the gate level. Watch 0:00–6:00 for the core model.</div></div></div>
+      <div class="resource-item"><span class="resource-icon">📖</span><div><a href="#" target="_blank">Textbook §4.1 — Logic Design Conventions</a><div class="resource-note">Clocking methodology and the edge-triggered register model. Figure 4.1 is the D flip-flop from which all registers are built.</div></div></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       §05 — Two Important Theorems
+  ══════════════════════════════════════ -->
+  <section class="section" id="s5">
+    <div class="section-header">
+      <div class="section-num">§ 05</div>
+      <div>
+        <div class="section-title">Two Important Theorems</div>
+        <div class="section-sub">hw.pdf Slides 17–18 · "Why this all works"</div>
+      </div>
+      <span class="source-badge">hw.pdf</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0;" class="theorem-grid">
+
+      <div style="border:2px solid var(--teal);border-radius:8px;padding:20px;">
+        <div style="font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:var(--teal);margin-bottom:10px;">THEOREM 1 — NAND Completeness</div>
+        <p style="font-size:14px;"><strong>Every combinational circuit can be built from just AND + OR gates</strong> (assuming inputs and their negations are available). Corollary: <strong>NAND gates alone suffice</strong> for any combinational circuit.</p>
+        <div style="margin-top:12px;background:#f0fdfa;border-radius:6px;padding:12px;font-size:13px;font-family:Inter,sans-serif;">
+          <strong>Why it matters:</strong> The entire ALU, MUX, ImmGen — every combinational element in the datapath — can in principle be built from NAND gates. Modern logic minimization (Karnaugh maps, Quine-McCluskey) finds the <em>optimal</em> such circuit.
+        </div>
+      </div>
+
+      <div style="border:2px solid var(--blue);border-radius:8px;padding:20px;">
+        <div style="font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:var(--blue);margin-bottom:10px;">THEOREM 2 — State Machine Decomposition</div>
+        <p style="font-size:14px;"><strong>Every sequential circuit (state machine) can be decomposed into an output function and a next-state function</strong>. Each of those functions is just a combinational circuit.</p>
+        <div style="margin-top:12px;background:#eef2ff;border-radius:6px;padding:12px;font-size:13px;font-family:Inter,sans-serif;">
+          <strong>Why it matters:</strong> The multicycle FSM you studied in HW4 is a state machine. Its "next state" logic (what state to go to) and "outputs" (which control signals to assert) are both combinational circuits driven by the current state + instruction opcode.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="diagram-wrap">
+      <h4 style="font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;">State Machine Structure (Theorem 2 Applied)</h4>
+      <svg viewBox="0 0 660 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:660px">
+        <!-- State Register -->
+        <rect x="280" y="50" width="100" height="60" fill="white" stroke="#ea580c" stroke-width="2"/>
+        <line x1="285" y1="50" x2="295" y2="110" stroke="#fde68a" stroke-width="1"/>
+        <line x1="300" y1="50" x2="310" y2="110" stroke="#fde68a" stroke-width="1"/>
+        <line x1="315" y1="50" x2="325" y2="110" stroke="#fde68a" stroke-width="1"/>
+        <line x1="330" y1="50" x2="340" y2="110" stroke="#fde68a" stroke-width="1"/>
+        <line x1="345" y1="50" x2="355" y2="110" stroke="#fde68a" stroke-width="1"/>
+        <text x="296" y="82" font-family="Inter" font-size="10" fill="#ea580c" font-weight="700">State Reg</text>
+        <text x="296" y="96" font-family="Inter" font-size="9" fill="#ea580c">(Sequential)</text>
+        <!-- Next state logic -->
+        <rect x="80" y="55" width="120" height="50" rx="4" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
+        <text x="90" y="74" font-family="Inter" font-size="11" fill="#3730a3" font-weight="700">Next-State Logic</text>
+        <text x="90" y="90" font-family="Inter" font-size="10" fill="#4f46e5">(Combinational)</text>
+        <!-- Output logic -->
+        <rect x="460" y="55" width="120" height="50" rx="4" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+        <text x="470" y="74" font-family="Inter" font-size="11" fill="#14532d" font-weight="700">Output Logic</text>
+        <text x="470" y="90" font-family="Inter" font-size="10" fill="#16a34a">(Combinational)</text>
+        <!-- Arrows -->
+        <line x1="200" y1="80" x2="280" y2="80" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrowBlue)"/>
+        <text x="220" y="73" font-family="DM Mono" font-size="10" fill="#6b7280">NextState</text>
+        <line x1="380" y1="80" x2="460" y2="80" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+        <text x="392" y="73" font-family="DM Mono" font-size="10" fill="#6b7280">CurrState</text>
+        <!-- Inputs -->
+        <line x1="10" y1="80" x2="80" y2="80" stroke="#6b7280" stroke-width="2"/>
+        <text x="12" y="73" font-family="DM Mono" font-size="10" fill="#6b7280">opcode +</text>
+        <text x="12" y="85" font-family="DM Mono" font-size="10" fill="#6b7280">curr state</text>
+        <!-- Outputs -->
+        <line x1="580" y1="80" x2="650" y2="80" stroke="#16a34a" stroke-width="2"/>
+        <text x="588" y="73" font-family="DM Mono" font-size="10" fill="#6b7280">control</text>
+        <text x="588" y="85" font-family="DM Mono" font-size="10" fill="#6b7280">signals</text>
+        <!-- Feedback loop -->
+        <path d="M 330 110 Q 330 145 200 145 Q 80 145 80 110 L 80 105" fill="none" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <text x="175" y="140" font-family="DM Mono" font-size="9" fill="#ea580c">state feedback</text>
+        <!-- Clock -->
+        <text x="290" y="145" font-family="DM Mono" font-size="9" fill="#ea580c">CLK ↑</text>
+        <!-- Defs -->
+        <defs>
+          <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#4f46e5"/>
+          </marker>
+          <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#16a34a"/>
+          </marker>
+        </defs>
+      </svg>
+      <div class="diagram-caption">The multicycle FSM (HW4 / App. C) is exactly this structure. Current state + opcode → next state logic → state register updates on clock edge.</div>
+    </div>
+
+    <div class="callout exam">
+      Theorem 2 is why Appendix C exists. The multicycle FSM's next-state and output functions are both combinational circuits. That's how you turn the FSM bubble diagram into actual hardware — each function becomes a truth table → a logic circuit.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       §06 — Intro to Processor Design
+  ══════════════════════════════════════ -->
+  <section class="section" id="s6">
+    <div class="section-header">
+      <div class="section-num">§ 06</div>
+      <div>
+        <div class="section-title">Introduction to Processor Design</div>
+        <div class="section-sub">§4.1–4.2 · Mar 31 lecture · Clocking methodology · Building a CPU from elements</div>
+      </div>
+      <span class="source-badge">§4.1–4.2</span>
+    </div>
+
+    <p>Now that you know the building blocks, §4.1–4.2 asks: <em>how do we assemble them into a processor?</em> The answer is two things: a clocking methodology and a design process.</p>
+
+    <h3 style="font-size:19px;font-weight:700;color:var(--navy);margin:20px 0 10px;">The Clocking Methodology (§4.2)</h3>
+
+    <p>The <strong>edge-triggered clocking</strong> methodology says: combinational logic computes during a clock cycle; sequential elements capture the result at the clock edge. This prevents feedback loops that would make the circuit unanalyzable.</p>
+
+    <div class="diagram-wrap">
+      <h4 style="font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;">One Clock Cycle in the Single-Cycle Datapath</h4>
+      <svg viewBox="0 0 700 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:700px">
+        <!-- Timeline -->
+        <line x1="30" y1="90" x2="670" y2="90" stroke="#e5e7eb" stroke-width="2"/>
+        <!-- Cycle bracket -->
+        <line x1="80" y1="70" x2="80" y2="110" stroke="#4f46e5" stroke-width="2"/>
+        <line x1="560" y1="70" x2="560" y2="110" stroke="#4f46e5" stroke-width="2"/>
+        <line x1="80" y1="90" x2="560" y2="90" stroke="#4f46e5" stroke-width="2"/>
+        <text x="280" y="108" font-family="Inter" font-size="12" fill="#4f46e5" text-anchor="middle">One clock cycle (e.g. 1 ns)</text>
+        <!-- PC reads -->
+        <rect x="90" y="20" width="100" height="40" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+        <text x="140" y="36" font-family="Inter" font-size="10" fill="#92400e" font-weight="700" text-anchor="middle">Sequential READ</text>
+        <text x="140" y="50" font-family="DM Mono" font-size="9" fill="#92400e" text-anchor="middle">PC, InstrMem, RF</text>
+        <!-- Combinational -->
+        <rect x="210" y="20" width="200" height="40" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="310" y="36" font-family="Inter" font-size="10" fill="#1d4ed8" font-weight="700" text-anchor="middle">COMBINATIONAL</text>
+        <text x="310" y="50" font-family="DM Mono" font-size="9" fill="#1d4ed8" text-anchor="middle">ALU, MUX, ImmGen, Adders</text>
+        <!-- Sequential write -->
+        <rect x="430" y="20" width="110" height="40" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+        <text x="485" y="36" font-family="Inter" font-size="10" fill="#92400e" font-weight="700" text-anchor="middle">Sequential WRITE</text>
+        <text x="485" y="50" font-family="DM Mono" font-size="9" fill="#92400e" text-anchor="middle">PC, RF, DataMem</text>
+        <!-- Rising edge -->
+        <polyline points="560,110 560,70" stroke="#dc2626" stroke-width="2" stroke-dasharray="3,2"/>
+        <text x="565" y="65" font-family="DM Mono" font-size="10" fill="#dc2626" font-weight="700">↑ CLK</text>
+        <text x="545" y="118" font-family="DM Mono" font-size="9" fill="#dc2626">captures result</text>
+        <!-- Arrows -->
+        <line x1="190" y1="40" x2="208" y2="40" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrGray)"/>
+        <line x1="410" y1="40" x2="428" y2="40" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrGray)"/>
+        <defs>
+          <marker id="arrGray" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 z" fill="#6b7280"/>
+          </marker>
+        </defs>
+      </svg>
+      <div class="diagram-caption">During each cycle: sequential elements are read at the start, combinational logic computes the result, and the rising clock edge writes back to sequential elements. Everything happens in exactly one clock period.</div>
+    </div>
+
+    <h3 style="font-size:19px;font-weight:700;color:var(--navy);margin:24px 0 10px;">The Two-Phase Design Process (§4.1)</h3>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;" class="two-phase">
+      <div style="border:2px solid var(--indigo);border-radius:8px;padding:18px;">
+        <div style="font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:var(--indigo);margin-bottom:8px;">PHASE 1 — Data Path</div>
+        <p style="font-size:14px;">Wire up every component that data could ever flow through. Include every MUX, every path, every component — regardless of which instruction is running. Don't optimize yet.</p>
+        <p style="font-size:13px;color:var(--muted);">→ Results in Figure 4.21 (the full datapath diagram)</p>
+      </div>
+      <div style="border:2px solid var(--teal);border-radius:8px;padding:18px;">
+        <div style="font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:var(--teal);margin-bottom:8px;">PHASE 2 — Control Path</div>
+        <p style="font-size:14px;">For each instruction type, specify which MUX selects are 0/1, which memory enables are asserted. The control unit decodes the 7-bit opcode and drives these signals.</p>
+        <p style="font-size:13px;color:var(--muted);">→ Results in the control signal table (Figure 4.22)</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      Shankar's key quote from Apr 14: "The hard part is writing English. Hardware design is trivial." Design each instruction type in English first: what needs to be read, what computation happens, what gets written back. The hardware wiring follows directly from that description.
+    </div>
+
+    <div style="background:white;border:1px solid var(--border);border-radius:8px;padding:20px;margin:20px 0;">
+      <h4 style="font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:14px;color:var(--navy);">Shankar's RTL Design Method — Step by Step</h4>
+      <div style="font-family:'DM Mono',monospace;font-size:13px;line-height:2;color:var(--text);">
+        <div style="color:var(--muted);font-size:11px;margin-bottom:6px;">For any instruction:</div>
+        <div><span style="color:var(--blue);font-weight:700;">1.</span> Write precise <strong>English</strong> — what does this instruction do?</div>
+        <div><span style="color:var(--blue);font-weight:700;">2.</span> Identify every <strong>sequential element</strong> mentioned</div>
+        <div><span style="color:var(--blue);font-weight:700;">3.</span> Draw a <strong>hatched box</strong> for each sequential element</div>
+        <div><span style="color:var(--blue);font-weight:700;">4.</span> Identify <strong>combinational elements</strong> needed (ALU, MUX, adder)</div>
+        <div><span style="color:var(--blue);font-weight:700;">5.</span> Connect — just re-read the English and draw the wires</div>
+        <div><span style="color:var(--blue);font-weight:700;">6.</span> For each MUX: which input should be selected? → that's your control signal</div>
+      </div>
+    </div>
+
+    <div class="resources">
+      <h4>Resources — §4.1–4.2</h4>
+      <div class="resource-item"><span class="resource-icon">▶</span><div><a href="https://www.youtube.com/watch?v=jQ5NLhpy_nE" target="_blank">David Black-Schaffer — RISC-V Processor Design Overview (YouTube)</a><div class="resource-note">Watch first 10 min for an intro to the datapath design process that mirrors Shankar's two-phase approach.</div></div></div>
+      <div class="resource-item"><span class="resource-icon">▶</span><div><a href="https://www.youtube.com/watch?v=fcHqnXsMUv0" target="_blank">Neso Academy — Introduction to Processor Design</a><div class="resource-note">Covers clocking methodology and edge-triggered flip-flops in the context of CPU design. Good visual.</div></div></div>
+      <div class="resource-item"><span class="resource-icon">🔗</span><div><a href="lecture_apr14_single_cycle_datapath.html" target="_blank" rel="noopener">Apr 14 Lecture Notes</a><div class="resource-note">Your own notes apply the two-phase process instruction by instruction. This is §4.1–4.2 in action.</div></div></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       §07 — Per-Section Quizzes
+  ══════════════════════════════════════ -->
+  <section class="section" id="s7">
+    <div class="section-header">
+      <div class="section-num">§ 07</div>
+      <div>
+        <div class="section-title">Section Quizzes</div>
+        <div class="section-sub">One per concept block — medium difficulty</div>
+      </div>
+    </div>
+
+    <!-- Quiz Block A: Classes -->
+    <div class="quiz-section">
+      <div class="quiz-header">📝 QUIZ A — Hardware Element Classes (§01–§02)</div>
+
+      <div class="quiz-q">
+        <div class="quiz-q-source">Source: hw.pdf Slide 5 + Shankar Apr 14 lecture</div>
+        <div class="quiz-q-text">1. A 2:1 MUX selects between two 8-bit inputs based on a 1-bit SEL line. How many bits wide must SEL be for a 16:1 MUX?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerMC(this,'wrong','4 is correct. A 16:1 MUX has 16 inputs → log₂(16) = 4 bits needed. This is hw.pdf Fact 1: n bits → 2ⁿ options.')">2 bits</button>
+          <button class="quiz-opt" onclick="answerMC(this,'correct','Correct! log₂(16) = 4 bits. In general for an N:1 MUX, SEL width = ⌈log₂(N)⌉ bits.')">4 bits</button>
+          <button class="quiz-opt" onclick="answerMC(this,'wrong','4 is correct. 8 bits would allow 2⁸ = 256 inputs, way more than needed.')">8 bits</button>
+          <button class="quiz-opt" onclick="answerMC(this,'wrong','16 bits would let you address 2¹⁶ inputs. Overkill. You need exactly log₂(16) = 4 bits.')">16 bits</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-a1"></div>
+      </div>
+
+      <div class="quiz-q">
+        <div class="quiz-q-source">Source: hw.pdf Slide 5 + Shankar notation convention</div>
+        <div class="quiz-q-text">2. True or False: A combinational element may need to be clocked because its computation takes time. Justify your answer.</div>
+        <div style="margin-bottom:8px;display:flex;gap:10px;">
+          <button class="quiz-opt" style="width:auto;padding:8px 16px" onclick="answerTF(this,'false','FALSE is correct. Combinational elements are defined as stateless — they are NEVER clocked. The output is simply f(current inputs). Time delay is a physical property of gates, but conceptually we treat the output as instantaneous. Only sequential elements are clocked.')">True</button>
+          <button class="quiz-opt" style="width:auto;padding:8px 16px" onclick="answerTF(this,'true','FALSE is correct. Combinational elements are defined as stateless — they are NEVER clocked. The output is simply f(current inputs). Time delay is a physical property of gates, but conceptually we treat the output as instantaneous. Only sequential elements are clocked.')">False</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-a2"></div>
+      </div>
+
+      <div class="quiz-q">
+        <div class="quiz-q-source">Source: hw.pdf Slide 6 — 2 Important Facts</div>
+        <div class="quiz-q-text">3. Fill in: How many bits do you need to encode one of 6 different ALU operations?</div>
+        <input class="fill-input" id="fill-a3" placeholder="Enter a number (e.g. 3)">
+        <button class="quiz-check-btn" onclick="checkFill('fill-a3',['3'],'Correct! 2² = 4 < 6 ≤ 8 = 2³, so you need 3 bits. This is the formula from hw.pdf: [2^(n-1)+1, 2^n] options → n bits.','You need 3 bits. Since 2² = 4 &lt; 6 ≤ 8 = 2³, 2 bits are not enough (only 4 options), so 3 bits are required. From hw.pdf slide 6: ⌈log₂(6)⌉ = 3.','fill-fb-a3')">Check</button>
+        <div class="quiz-feedback" id="fill-fb-a3"></div>
+      </div>
+
+    </div>
+
+    <!-- Quiz Block B: Combinational -->
+    <div class="quiz-section">
+      <div class="quiz-header">📝 QUIZ B — Combinational Elements & ALU (§03)</div>
+
+      <div class="quiz-q">
+        <div class="quiz-q-source">Source: hw.pdf Slide 12 + Apr 14 RAG notes (exam flag)</div>
+        <div class="quiz-q-text">4. What ALUOp does Shankar use for <code>beq rs1, rs2, label</code>? Why not Add?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerMC(this,'wrong','No. ALUOp=Add (00) is used for lw and sw to compute memory addresses. For beq we need to check equality, which requires subtraction.')">Add (00) — to compute the branch offset</button>
+          <button class="quiz-opt" onclick="answerMC(this,'correct','Correct! beq tests if rs1 == rs2, which is equivalent to (rs1 - rs2) == 0. When the result is 0, the Zero flag = 1, and the AND gate (Branch AND Zero) fires. That\'s why ALUOp = 01 (subtract).')">Sub (01) — because equality is X - Y = 0</button>
+          <button class="quiz-opt" onclick="answerMC(this,'wrong','ALUOp=10 is for R-type instructions (the function code selects the operation). beq uses subtract.')">R-type func (10) — let the funct bits decide</button>
+          <button class="quiz-opt" onclick="answerMC(this,'wrong','This encoding doesn\'t exist. beq is Sub (01).')">AND (11) — to compare bits</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-b1"></div>
+      </div>
+
+      <div class="quiz-q">
+        <div class="quiz-q-source">Source: hw.pdf Slide 12 + textbook §4.3</div>
+        <div class="quiz-q-text">5. The ALU Zero output equals 1 when ____. For <code>beq</code> the branch is taken when ____.</div>
+        <textarea class="tf-area" id="tf-b2" placeholder="Write your answer here — one or two sentences..."></textarea>
+        <button class="quiz-check-btn" onclick="revealTF('tf-b2','Zero = 1 when ALU result F = 0 (i.e., the 32-bit output is all zeros). For beq, the branch is taken when both the Branch control signal = 1 AND Zero = 1. The AND gate in the datapath combines these two signals to compute PCSrc: PCSrc = Branch AND Zero. If either is 0, the branch is NOT taken.','fb-b2')">Reveal Answer</button>
+        <div class="quiz-feedback" id="fb-b2"></div>
+      </div>
+
+    </div>
+
+    <!-- Quiz Block C: Sequential -->
+    <div class="quiz-section">
+      <div class="quiz-header">📝 QUIZ C — Sequential Elements (§04)</div>
+
+      <div class="quiz-q">
+        <div class="quiz-q-source">Source: hw.pdf Slide 16 + RISC-V ISA</div>
+        <div class="quiz-q-text">6. The RISC-V register file has 32 registers. How wide must the ReadReg1 address input be? Which instruction field maps to ReadReg1?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerMC(this,'wrong','32 bits would let you address 2³² registers. The register file only has 32 registers, so 5 bits suffice.')">32 bits — Instruction[31:0]</button>
+          <button class="quiz-opt" onclick="answerMC(this,'wrong','Close on the field but 8 bits would address 256 registers. Only 5 are needed for 32 registers.')">8 bits — Instruction[24:20]</button>
+          <button class="quiz-opt" onclick="answerMC(this,'correct','Correct! log₂(32) = 5 bits. The rs1 field occupies Instruction[19:15]. ReadReg2 gets Instruction[24:20] (rs2), and WriteReg gets Instruction[11:7] (rd).')">5 bits — Instruction[19:15] (rs1 field)</button>
+          <button class="quiz-opt" onclick="answerMC(this,'wrong','4 bits would only address 16 registers, not 32. You need 5 bits.')">4 bits — Instruction[15:12]</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-c1"></div>
+      </div>
+
+      <div class="quiz-q">
+        <div class="quiz-q-source">Source: hw.pdf Slide 13 + common exam question</div>
+        <div class="quiz-q-text">7. True or False: To read from a sequential element, you must wait for the rising clock edge. Justify.</div>
+        <div style="margin-bottom:8px;display:flex;gap:10px;">
+          <button class="quiz-opt" style="width:auto;padding:8px 16px" onclick="answerTF(this,'false','FALSE. Reading from a sequential element is combinational — you send the address and the data appears on the read-data output without waiting for a clock edge. Only WRITES are clocked (you assert Write=1 and the value latches on the rising edge). This is exactly why we can read multiple registers and instruction memory at the start of a clock cycle without any synchronization.')">True</button>
+          <button class="quiz-opt" style="width:auto;padding:8px 16px" onclick="answerTF(this,'true','FALSE. Reading from a sequential element is combinational — you send the address and the data appears on the read-data output without waiting for a clock edge. Only WRITES are clocked (you assert Write=1 and the value latches on the rising edge). This is exactly why we can read multiple registers and instruction memory at the start of a clock cycle without any synchronization.')">False</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-c2"></div>
+      </div>
+
+    </div>
+
+    <!-- Quiz Block D: Processor Intro -->
+    <div class="quiz-section">
+      <div class="quiz-header">📝 QUIZ D — Intro to Processor Design §4.1–4.2</div>
+
+      <div class="quiz-q">
+        <div class="quiz-q-source">Source: §4.1 + Shankar's design philosophy</div>
+        <div class="quiz-q-text">8. Multiple choice: In Shankar's two-phase CPU design process, which phase does the programmer-visible behavior of an instruction determine?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerMC(this,'wrong','Not directly. The control path reads the datapath (MUX selects, memory enables), but the programmer-visible behavior — what data flows where — determines the data path.')">Only the control path</button>
+          <button class="quiz-opt" onclick="answerMC(this,'correct','Correct! What the instruction does in English (fetch rs1, compute ALU result, write to rd) determines exactly what components and connections the data path needs. The control path then specifies the MUX selects and enables that activate those connections for this specific instruction type.')">Primarily the data path</button>
+          <button class="quiz-opt" onclick="answerMC(this,'wrong','Neither — the instruction set architecture (ISA) determines both phases equally. But in terms of design ordering, the data path is determined first.')">Both equally and simultaneously</button>
+          <button class="quiz-opt" onclick="answerMC(this,'wrong','The clock period is set by the critical path (the longest combinational delay in the data path), not by the instruction semantics.')">The clock period</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-d1"></div>
+      </div>
+
+      <div class="quiz-q">
+        <div class="quiz-q-source">Source: §4.2 clocking methodology</div>
+        <div class="quiz-q-text">9. Open-ended: Explain in 2–3 sentences why the single-cycle RISC-V processor uses edge-triggered clocking instead of level-sensitive clocking. What problem does it solve?</div>
+        <textarea class="tf-area" id="tf-d2" placeholder="Write your answer here..."></textarea>
+        <button class="quiz-check-btn" onclick="revealTF('tf-d2','Edge-triggered clocking ensures that each sequential element reads its input at a well-defined instant (the rising clock edge), preventing combinational feedback loops. Without this, a value written to the PC might immediately propagate back through instruction memory and the ALU before the cycle is complete, creating an indeterminate state. By synchronizing all writes to a single clock edge, the circuit has a clean \"computation happens in one cycle, state updates at the edge\" model.','fb-d2')">Reveal Answer</button>
+        <div class="quiz-feedback" id="fb-d2"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════
+       §08 — Mock Exam
+  ══════════════════════════════════════ -->
+  <section class="section" id="s8">
+    <div class="mock-exam">
+      <div class="mock-header">
+        <span class="mock-badge">MOCK EXAM</span>
+        <div class="mock-title">Foundations — Exam-Style Questions</div>
+      </div>
+      <p style="font-family:Inter,sans-serif;font-size:13px;color:var(--muted);margin-bottom:20px;">Harder than the practice quizzes. Try each before revealing. These are designed to predict Test 2 Part A patterns based on hw.pdf and Shankar's emphasis.</p>
+
+      <div class="mock-q">
+        <div class="mock-q-num">Q1 · Classification + Drawing Convention [5 pts]</div>
+        <div class="mock-q-text">For each component listed below, state whether it is <em>combinational</em> or <em>sequential</em> and describe how it would be drawn in Shankar's datapath diagrams. Then explain the significance of the drawing convention.</div>
+        <div style="font-family:DM Mono,monospace;font-size:13px;background:#f9fafb;padding:10px 14px;border-radius:4px;margin:8px 0;">
+          (a) ImmGen &nbsp; (b) Data Memory &nbsp; (c) PC+4 adder &nbsp; (d) Register File (read side) &nbsp; (e) AND gate for PCSrc
+        </div>
+        <button class="reveal-btn" onclick="toggleReveal(this,'rev-m1')">Reveal Answer</button>
+        <div class="reveal-answer" id="rev-m1">
+          <strong>(a) ImmGen</strong> — Combinational. Plain box or oval. Takes instruction bits and produces a sign-extended immediate. No state.<br><br>
+          <strong>(b) Data Memory</strong> — Sequential. Drawn with diagonal hatch marks. Holds state (the memory contents). Writes are clocked; reads are combinational but the element itself is classified as sequential.<br><br>
+          <strong>(c) PC+4 Adder</strong> — Combinational. Plain triangle/arrow shape. Shankar explicitly said "boxes are combinational!" — the adder just adds 4 to its input with no stored state.<br><br>
+          <strong>(d) Register File (read side)</strong> — Sequential (the whole element is sequential even though reads are combinational). Hatched box. Reading is combinational but the stored register values constitute state.<br><br>
+          <strong>(e) AND gate</strong> — Combinational. Plain AND-gate symbol. Computes PCSrc = Branch AND Zero instantaneously.<br><br>
+          <em>Significance:</em> The drawing convention tells you which elements update on the clock edge (hatched = must wait for rising edge to store a value). This determines what can change each cycle and sets up the critical path analysis.
+        </div>
+      </div>
+
+      <div class="mock-q">
+        <div class="mock-q-num">Q2 · Bit-Width Calculation [4 pts]</div>
+        <div class="mock-q-text">A new ISA extension adds 12 ALU operations (beyond the original 4). How many bits must the ALUOp signal be? If a control unit decodes a 7-bit opcode, how many distinct instruction formats can it theoretically distinguish?</div>
+        <button class="reveal-btn" onclick="toggleReveal(this,'rev-m2')">Reveal Answer</button>
+        <div class="reveal-answer" id="rev-m2">
+          <strong>ALUOp width:</strong> Need to pick between 12 operations. ⌈log₂(12)⌉ = 4 bits (since 2³ = 8 &lt; 12 ≤ 16 = 2⁴). A 3-bit signal would only support 8 operations — not enough.<br><br>
+          <strong>Instruction formats from 7-bit opcode:</strong> 2⁷ = 128 distinct opcodes. The RISC-V spec uses a subset of these. This is why the opcode field being 7 bits gives plenty of room for extension.
+        </div>
+      </div>
+
+      <div class="mock-q">
+        <div class="mock-q-num">Q3 · RTL Design [6 pts]</div>
+        <div class="mock-q-text">Write the English description of the <code>sw rs2, offset(rs1)</code> instruction's hardware operation, following Shankar's format. Then list: (a) which sequential elements are read, (b) which combinational elements are used, and (c) which sequential elements are written. Does this instruction write the register file?</div>
+        <button class="reveal-btn" onclick="toggleReveal(this,'rev-m3')">Reveal Answer</button>
+        <div class="reveal-answer" id="rev-m3">
+          <strong>English:</strong> "Send rs1 (IR[19:15]) and rs2 (IR[24:20]) from the register file. Sign-extend the S-type immediate from IR fields [31:25, 11:7]. Compute the address as rs1 + sign_ext(offset) using the ALU. Send rs2 as write data to data memory at that address. Assert MemWrite=1."<br><br>
+          <strong>(a) Sequential elements read:</strong> Register file (reads rs1 → ReadData1, rs2 → ReadData2). Instruction memory (reads instruction).<br><br>
+          <strong>(b) Combinational elements used:</strong> ImmGen (sign-extends S-type immediate), ALU (adds rs1 + offset, ALUSrc=1 selects immediate), ALUSrc MUX.<br><br>
+          <strong>(c) Sequential elements written:</strong> Data Memory only (MemWrite=1, write address = ALU result, write data = rs2). PC is written with PC+4.<br><br>
+          <strong>Does sw write the register file?</strong> No. RegWrite=0 for sw. The sw instruction moves data from a register to memory — no register receives a new value.
+        </div>
+      </div>
+
+      <div class="mock-q">
+        <div class="mock-q-num">Q4 · State Machine Decomposition [5 pts]</div>
+        <div class="mock-q-text">The multicycle FSM from HW4 has 10 states. (a) How many flip-flops are needed to encode the current state? (b) Shankar's Theorem 2 says every sequential circuit decomposes into two functions. Name them and state what hardware implements each in the multicycle FSM.</div>
+        <button class="reveal-btn" onclick="toggleReveal(this,'rev-m4')">Reveal Answer</button>
+        <div class="reveal-answer" id="rev-m4">
+          <strong>(a) Flip-flops needed:</strong> ⌈log₂(10)⌉ = 4 bits (since 2³ = 8 &lt; 10 ≤ 16 = 2⁴). So 4 D flip-flops are needed to encode 10 distinct states.<br><br>
+          <strong>(b) Two functions from Theorem 2:</strong><br>
+          — <strong>Next-State Function:</strong> Takes current state + instruction opcode → outputs the next state encoding. Implemented as a combinational circuit (truth table → logic gates). In the FSM diagram this is the arc logic.<br>
+          — <strong>Output Function:</strong> Takes current state (and possibly input) → outputs the control signals (RegWrite, MemRead, PCWrite, etc.). Also implemented as a combinational circuit. In the FSM diagram these are the signal labels inside each bubble.
+        </div>
+      </div>
+
+      <div class="mock-q">
+        <div class="mock-q-num">Q5 · Clocking + Register File Design [4 pts]</div>
+        <div class="mock-q-text">An instruction simultaneously reads register x5 and writes register x5 in the same cycle (e.g., <code>add x5, x5, x6</code>). Under edge-triggered clocking, what value does the instruction read from x5 — the old value or the new value? Explain using the clock model.</div>
+        <button class="reveal-btn" onclick="toggleReveal(this,'rev-m5')">Reveal Answer</button>
+        <div class="reveal-answer" id="rev-m5">
+          <strong>It reads the old value</strong> (the value stored before the clock edge).<br><br>
+          Under edge-triggered clocking: reads from sequential elements are combinational and happen at the <em>start</em> of the cycle (before the clock edge). Writes latch at the rising clock edge at the <em>end</em> of the cycle. So in <code>add x5, x5, x6</code>: the register file outputs the old x5 value at the beginning of the cycle, the ALU computes old_x5 + x6 during the cycle, and only at the rising edge does the new value get written back to x5. The read and write cannot collide because they occur at different points in the clock cycle.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<script>
+// ── Gate simulator ──
+const gateState = {
+  and: [0, 0], or: [0, 0], not: [0], nand: [0, 0]
+};
+
+function gateCalc(type, a, b) {
+  if (type === 'and') return a & b;
+  if (type === 'or') return a | b;
+  if (type === 'not') return a ^ 1;
+  if (type === 'nand') return (a & b) ^ 1;
+}
+
+function toggleGate(type, isB = false) {
+  if (type === 'not') {
+    gateState.not[0] ^= 1;
+  } else {
+    gateState[type][isB ? 1 : 0] ^= 1;
+  }
+  updateGateUI(type);
+}
+
+function updateGateUI(type) {
+  const s = gateState[type];
+  const a = s[0], b = (type !== 'not') ? s[1] : 0;
+  const out = type === 'not' ? gateCalc(type, a) : gateCalc(type, a, b);
+
+  if (type !== 'not') {
+    const btnA = document.getElementById(type + '-a');
+    const btnB = document.getElementById(type + '-b');
+    btnA.textContent = a;
+    btnB.textContent = b;
+    btnA.className = 'toggle-btn' + (a ? ' active' : '');
+    btnB.className = 'toggle-btn' + (b ? ' active' : '');
+    // Update SVG labels
+    const la = document.getElementById(type + '-a-lbl');
+    const lb = document.getElementById(type + '-b-lbl');
+    if (la) la.textContent = 'A=' + a;
+    if (lb) lb.textContent = 'B=' + b;
+    // Highlight truth table row
+    ['00','01','10','11'].forEach(k => {
+      const row = document.getElementById(type + '-r' + k);
+      if (row) row.className = (k === '' + a + b) ? 'highlight' : '';
+    });
+  } else {
+    const btnA = document.getElementById('not-a');
+    btnA.textContent = a;
+    btnA.className = 'toggle-btn' + (a ? ' active' : '');
+    const la = document.getElementById('not-a-lbl');
+    if (la) la.textContent = 'A=' + a;
+    const r0 = document.getElementById('not-r0'), r1 = document.getElementById('not-r1');
+    if (r0) r0.className = a === 0 ? 'highlight' : '';
+    if (r1) r1.className = a === 1 ? 'highlight' : '';
+  }
+
+  const res = document.getElementById(type + '-result');
+  const lbl = document.getElementById(type + '-out-lbl');
+  res.textContent = out;
+  res.className = 'gate-output ' + (out ? 'one' : 'zero');
+  if (lbl) { lbl.textContent = out; lbl.setAttribute('fill', out ? '#16a34a' : '#dc2626'); }
+}
+
+// ── MUX simulator ──
+const muxState = { i: [0,1,0,1], s: [0,0] };
+function updateMux() {
+  ['i0','i1','i2','i3'].forEach((id,idx) => {
+    const btn = document.getElementById('mux-' + id);
+    muxState.i[idx] = parseInt(btn.textContent) ^ 1;
+    btn.textContent = muxState.i[idx];
+    const lbl = document.getElementById('mux-l' + idx);
+    if (lbl) lbl.textContent = 'In' + ['₀','₁','₂','₃'][idx] + '=' + muxState.i[idx];
+  });
+  ['s1','s0'].forEach((id,idx) => {
+    const btn = document.getElementById('mux-' + id);
+    muxState.s[idx] = parseInt(btn.textContent) ^ 1;
+    btn.textContent = muxState.s[idx];
+  });
+  const sel = muxState.s[0] * 2 + muxState.s[1];
+  const selBin = muxState.s[0] + '' + muxState.s[1];
+  const out = muxState.i[sel];
+  document.getElementById('mux-sel-val').textContent = selBin;
+  const names = ['In₀','In₁','In₂','In₃'];
+  const res = document.getElementById('mux-result');
+  res.textContent = names[sel] + ' = ' + out;
+  res.className = 'gate-output ' + (out ? 'one' : 'zero');
+  document.getElementById('mux-explain').textContent = 'SEL=0b' + selBin + '=' + sel + ' → output ' + names[sel];
+  const selLbl = document.getElementById('mux-sel-lbl');
+  if (selLbl) selLbl.textContent = 'SEL=' + selBin + '=' + sel;
+  const outLbl = document.getElementById('mux-out-lbl');
+  if (outLbl) outLbl.textContent = 'F=' + out;
+}
+
+// ── ALU simulator ──
+function updateAlu() {
+  const x = parseInt(document.getElementById('alu-x').value) || 0;
+  const y = parseInt(document.getElementById('alu-y').value) || 0;
+  const op = document.getElementById('alu-op').value;
+  let f, why;
+  if (op === 'add') { f = x + y; why = x + ' + ' + y + ' = ' + f; }
+  else if (op === 'sub') { f = x - y; why = x + ' - ' + y + ' = ' + f; }
+  else if (op === 'and') { f = x & y; why = x + ' AND ' + y + ' = ' + f; }
+  else if (op === 'or') { f = x | y; why = x + ' OR ' + y + ' = ' + f; }
+  const zero = f === 0 ? 1 : 0;
+  const opNames = {add:'Add(00)', sub:'Sub(01)', and:'AND(10)', or:'OR(11)'};
+  document.getElementById('alu-result').textContent = 'F = ' + f;
+  document.getElementById('alu-result').className = 'gate-output ' + (zero ? 'one' : 'zero');
+  document.getElementById('alu-zero-out').textContent = zero;
+  document.getElementById('alu-why').textContent = why;
+  document.getElementById('alu-xlbl').textContent = 'X=' + x;
+  document.getElementById('alu-ylbl').textContent = 'Y=' + y;
+  document.getElementById('alu-flbl').textContent = 'F=' + f;
+  document.getElementById('alu-zerolbl').textContent = 'Z=' + zero;
+  document.getElementById('alu-oplbl').textContent = 'ALUOp=' + opNames[op];
+}
+updateAlu();
+
+// ── Classifier ──
+const correctAnswers = ['comb','seq','comb','seq','comb','seq'];
+function classify(btn, correct, chosen, explanation) {
+  const row = btn.closest('.classify-row');
+  const idx = [...document.querySelectorAll('.classify-row')].indexOf(row);
+  const res = document.getElementById('res-' + idx);
+  if (chosen === correct) {
+    btn.className = 'classify-btn ' + (correct === 'comb' ? 'correct-comb' : 'correct-seq') + ' ' + chosen;
+    res.textContent = '✓ ' + explanation.substring(0, 60) + (explanation.length > 60 ? '...' : '');
+    res.style.color = '#16a34a';
+    row.querySelectorAll('.classify-btn').forEach(b => { if (b !== btn) b.disabled = true; });
+  } else {
+    btn.className = 'classify-btn wrong';
+    res.textContent = '✗ ' + explanation.substring(0, 60) + '...';
+    res.style.color = '#dc2626';
+  }
+}
+
+// ── Quiz functions ──
+function answerMC(btn, result, explanation) {
+  const q = btn.closest('.quiz-q');
+  const fbId = q.querySelector('.quiz-feedback').id;
+  const fb = document.getElementById(fbId);
+  q.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+  btn.className = 'quiz-opt ' + result;
+  if (result === 'wrong') {
+    // show correct one
+    const opts = q.querySelectorAll('.quiz-opt');
+    opts.forEach(o => { if (o !== btn && o.getAttribute('onclick').includes("'correct'")) o.className = 'quiz-opt reveal'; });
+  }
+  fb.textContent = explanation;
+  fb.className = 'quiz-feedback show ' + result;
+}
+
+function answerTF(btn, correctVal, explanation) {
+  const q = btn.closest('.quiz-q');
+  const isTrue = btn.textContent === 'True';
+  const correct = (correctVal === 'true' && isTrue) || (correctVal === 'false' && !isTrue);
+  q.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+  btn.className = 'quiz-opt ' + (correct ? 'correct' : 'wrong');
+  const fb = q.querySelector('.quiz-feedback');
+  if (!fb) { const newFb = document.createElement('div'); newFb.className = 'quiz-feedback show ' + (correct ? 'correct' : 'wrong'); newFb.textContent = explanation; q.appendChild(newFb); }
+  else { fb.textContent = explanation; fb.className = 'quiz-feedback show ' + (correct ? 'correct' : 'wrong'); }
+}
+
+function checkFill(inputId, acceptedAnswers, correctMsg, wrongMsg, fbId) {
+  const val = document.getElementById(inputId).value.trim().toLowerCase();
+  const fb = document.getElementById(fbId);
+  const isCorrect = acceptedAnswers.some(a => val === a.toLowerCase());
+  fb.textContent = isCorrect ? correctMsg : wrongMsg;
+  fb.className = 'quiz-feedback show ' + (isCorrect ? 'correct' : 'wrong');
+}
+
+function revealTF(inputId, answer, fbId) {
+  const fb = document.getElementById(fbId);
+  fb.innerHTML = '<strong>Model Answer:</strong> ' + answer;
+  fb.className = 'quiz-feedback show correct';
+}
+
+function toggleReveal(btn, id) {
+  const el = document.getElementById(id);
+  if (el.classList.contains('show')) {
+    el.classList.remove('show'); btn.textContent = 'Reveal Answer';
+  } else {
+    el.classList.add('show'); btn.textContent = 'Hide Answer';
+  }
+}
+
+// ── Progress bar ──
+window.addEventListener('scroll', () => {
+  const scrolled = document.documentElement.scrollTop;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progressFill').style.width = Math.round(scrolled / total * 100) + '%';
+});
+</script>
+
+<style>
+@media (max-width: 600px) {
+  .theorem-grid, .two-phase { grid-template-columns: 1fr !important; }
+  .diagram-wrap svg { max-width: 100%; }
+}
+</style>
+
+</body>
+</html>
