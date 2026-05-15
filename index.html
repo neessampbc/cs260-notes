@@ -19,8 +19,8 @@
     .tag{display:inline-block;font-family:var(--font-m);font-size:11px;color:var(--green);background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.3);padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.08em}
     h1{font-family:var(--font-d);font-size:clamp(30px,5vw,52px);margin:14px 0 10px;line-height:1.05}
     .section{margin-top:8px}
-    .section + .section{margin-top:44px}
     .section-title{font-family:var(--font-d);font-size:clamp(20px,2.5vw,26px);font-weight:700;color:var(--text);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+    .section-title--follow{margin-top:40px}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
     .card{display:block;text-decoration:none;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;transition:.18s}
     .card:hover{transform:translateY(-2px);border-color:rgba(0,255,136,.42);background:#1a2030}
@@ -32,12 +32,14 @@
     .p1{color:var(--blue);border-color:rgba(68,136,255,.35);background:rgba(68,136,255,.08)}
     .p2{color:var(--amber);border-color:rgba(255,179,0,.35);background:rgba(255,179,0,.08)}
     .scope-lead{max-width:720px;color:var(--muted);font-size:15px;line-height:1.65;margin-bottom:28px}
-    .scope-topics{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
-    .topic-sheet{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 22px}
-    .topic-sheet h3{font-family:var(--font-d);font-size:clamp(17px,2.2vw,20px);font-weight:700;color:var(--text);margin-bottom:10px;line-height:1.2}
-    .topic-sheet ul{margin:0;padding-left:1.25rem;color:var(--muted);font-size:14px;line-height:1.65}
-    .topic-sheet li{margin-bottom:.35em}
-    .topic-sheet li:last-child{margin-bottom:0}
+    .scope-lead strong{color:var(--text);font-weight:600}
+    .exam-after-lessons{margin-top:40px;padding-top:36px;border-top:1px solid var(--border)}
+    .exam-scope{font-size:14px;line-height:1.65;color:var(--muted);max-width:820px}
+    .exam-scope h3{font-family:var(--font-d);font-size:clamp(17px,2vw,19px);font-weight:700;color:var(--text);margin:1.65rem 0 .55rem}
+    .exam-scope h3:first-child{margin-top:0}
+    .exam-scope ul{margin:0 0 .25rem;padding-left:1.25rem}
+    .exam-scope li{margin-bottom:.35em}
+    .exam-scope strong{color:var(--text);font-weight:600}
     .parts-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
     @media(max-width:720px){.parts-grid{grid-template-columns:1fr}}
     .part-box{border-radius:14px;padding:18px 20px;border:1px solid var(--border);background:var(--card)}
@@ -48,6 +50,7 @@
     .part-box p,.part-box ul{color:var(--muted);font-size:14px;line-height:1.65}
     .part-box ul{margin:.5em 0 0;padding-left:1.2rem}
     .part-box li{margin-bottom:.3em}
+    .part-box strong{color:var(--text);font-weight:600}
   </style>
 </head>
 <body>
@@ -64,112 +67,10 @@
   <main class="wrap">
     <span class="tag">CSCI 260</span>
     <h1>Computer Architecture<br>Notes Hub</h1>
-    <p class="scope-lead">Below is the combined scope for the exam: topics to know, how they are weighted across the two parts, and links to lecture notes under &ldquo;Lecture notes.&rdquo;</p>
+    <p class="scope-lead">Use <strong>Lessons and notes</strong> for links to each page. Exam scope (plain list) and how the exam splits across two days are below that.</p>
 
-    <section class="section" aria-labelledby="exam-scope-heading">
-      <h2 class="section-title" id="exam-scope-heading">Exam scope (by topic)</h2>
-      <div class="scope-topics">
-        <div class="topic-sheet">
-          <h3>Assembly (light)</h3>
-          <ul>
-            <li>Know enough to write small fragments (for example, three lines exercising a specific instruction or architecture feature).</li>
-            <li>You will <strong style="color:var(--text)">not</strong> be asked to write a full program.</li>
-          </ul>
-        </div>
-        <div class="topic-sheet">
-          <h3>Hardware elements (160 review)</h3>
-          <ul>
-            <li>Know all hardware elements: MUXes, memory (read/write), register files, and so on.</li>
-            <li>Given a simple circuit, be able to design it.</li>
-          </ul>
-        </div>
-        <div class="topic-sheet">
-          <h3>Single cycle</h3>
-          <ul>
-            <li>Implement a given instruction on the single-cycle datapath (data + control path).</li>
-            <li>Why is single cycle good? Why is it bad?</li>
-            <li>How to determine the critical path.</li>
-            <li>How to calculate clock rate from the critical path.</li>
-            <li>When is single cycle better vs. worse than multicycle, pipelined, or microcoded?</li>
-          </ul>
-        </div>
-        <div class="topic-sheet">
-          <h3>Multicycle</h3>
-          <ul>
-            <li>How to write RTL.</li>
-            <li>Implement a given instruction on the multicycle datapath.</li>
-            <li>Identify the clock cycle time and MIPS rating.</li>
-            <li>When is multicycle better vs. worse than single cycle?</li>
-          </ul>
-        </div>
-        <div class="topic-sheet">
-          <h3>Microcode</h3>
-          <ul>
-            <li>Know the basic concept and how it differs from multicycle.</li>
-            <li>Know advantages and disadvantages (conceptual, not memorized formats).</li>
-            <li>Shankar will provide the format if needed; you may be asked to write one micro-instruction.</li>
-          </ul>
-        </div>
-        <div class="topic-sheet">
-          <h3>Pipelining</h3>
-          <ul>
-            <li>Throughput vs. latency &mdash; know what each means.</li>
-            <li>The three types of hazards: structural, data, and control.</li>
-            <li>Given a program, identify all hazards.</li>
-            <li>How data hazards are handled: forwarding and stalling.</li>
-            <li>Given a forwarding or stalling condition with a bug, identify the bug.</li>
-            <li>Given a modified architecture, interpret what its forwarding/stalling condition does.</li>
-            <li>Control hazards: branch prediction.</li>
-            <li>1-bit branch predictor, 2-bit branch predictor, static branch predictor &mdash; know all three.</li>
-            <li>Tournament predictor: know roughly what it is (not in depth).</li>
-            <li>Clock rate for a pipeline = determined by the critical <strong style="color:var(--text)">stage</strong> (not critical path).</li>
-            <li>Given a custom pipeline with its own specs, calculate timing and cycle count for a program.</li>
-            <li>When is pipelining better vs. worse than single cycle, multicycle, or microcoded?</li>
-          </ul>
-        </div>
-        <div class="topic-sheet">
-          <h3>Interrupts / exceptions</h3>
-          <ul>
-            <li>Know what an interrupt is.</li>
-            <li>Given a scenario, recognize that interrupts or exceptions are the right solution.</li>
-          </ul>
-        </div>
-        <div class="topic-sheet">
-          <h3>Fixed and floating point</h3>
-          <ul>
-            <li>Convert numbers to fixed and floating point.</li>
-            <li>Know the issues and limitations of both (rounding, overflow, precision, and so on).</li>
-            <li>Do <strong style="color:var(--text)">not</strong> memorize IEEE 754 &mdash; Shankar will provide the format or invent one for the test.</li>
-          </ul>
-        </div>
-        <div class="topic-sheet">
-          <h3>Modern CPU architectures (brief)</h3>
-          <ul>
-            <li>You may see a picture and a question &mdash; know the rough idea.</li>
-          </ul>
-        </div>
-      </div>
-
-      <h2 class="section-title" id="exam-parts-heading" style="margin-top:8px">How the exam is split</h2>
-      <div class="parts-grid" role="region" aria-labelledby="exam-parts-heading">
-        <div class="part-box part-box--a">
-          <div class="meta">Part A &middot; May 19 &middot; 75 min</div>
-          <h3>Everything above except two design questions</h3>
-          <p>Big-picture comparisons, performance analysis, hazard identification, branch prediction, floating point, pipelining cycle counts, interrupt concepts.</p>
-        </div>
-        <div class="part-box part-box--b">
-          <div class="meta">Part B &middot; May 26 &middot; ~60 min</div>
-          <h3>Two design questions only</h3>
-          <ul>
-            <li><strong style="color:var(--text)">Q1:</strong> Implement a given instruction on the single-cycle datapath (data + control).</li>
-            <li><strong style="color:var(--text)">Q2:</strong> Implement a given instruction on the multicycle datapath.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="lecture-notes-heading">
-      <h2 class="section-title" id="lecture-notes-heading">Lecture notes</h2>
+    <section class="section" aria-labelledby="lessons-heading">
+      <h2 class="section-title" id="lessons-heading">Lessons and notes</h2>
       <div class="grid">
         <a class="card" href="foundations_hardware_prereqs.html">
           <div class="date">Prerequisite</div>
@@ -205,6 +106,98 @@
           <p class="desc">Push instruction RTL, ALUOUT and memory timing, new FSM states, multicycle critical path, and throughput.</p>
           <div class="pillrow"><span class="pill p1">Push</span><span class="pill p2">FSM</span></div>
         </a>
+      </div>
+
+      <div class="exam-after-lessons">
+        <h2 class="section-title" id="exam-scope-heading">Exam scope (by topic)</h2>
+        <div class="exam-scope">
+          <h3>Assembly (light)</h3>
+          <ul>
+            <li>Know enough to write small fragments (for example, three lines exercising a specific instruction or architecture feature).</li>
+            <li>You will <strong>not</strong> be asked to write a full program.</li>
+          </ul>
+
+          <h3>Hardware elements (160 review)</h3>
+          <ul>
+            <li>Know all hardware elements: MUXes, memory (read/write), register files, and so on.</li>
+            <li>Given a simple circuit, be able to design it.</li>
+          </ul>
+
+          <h3>Single cycle</h3>
+          <ul>
+            <li>Implement a given instruction on the single-cycle datapath (data + control path).</li>
+            <li>Why is single cycle good? Why is it bad?</li>
+            <li>How to determine the critical path.</li>
+            <li>How to calculate clock rate from the critical path.</li>
+            <li>When is single cycle better vs. worse than multicycle, pipelined, or microcoded?</li>
+          </ul>
+
+          <h3>Multicycle</h3>
+          <ul>
+            <li>How to write RTL.</li>
+            <li>Implement a given instruction on the multicycle datapath.</li>
+            <li>Identify the clock cycle time and MIPS rating.</li>
+            <li>When is multicycle better vs. worse than single cycle?</li>
+          </ul>
+
+          <h3>Microcode</h3>
+          <ul>
+            <li>Know the basic concept and how it differs from multicycle.</li>
+            <li>Know advantages and disadvantages (conceptual, not memorized formats).</li>
+            <li>Shankar will provide the format if needed; you may be asked to write one micro-instruction.</li>
+          </ul>
+
+          <h3>Pipelining</h3>
+          <ul>
+            <li>Throughput vs. latency &mdash; know what each means.</li>
+            <li>The three types of hazards: structural, data, and control.</li>
+            <li>Given a program, identify all hazards.</li>
+            <li>How data hazards are handled: forwarding and stalling.</li>
+            <li>Given a forwarding or stalling condition with a bug, identify the bug.</li>
+            <li>Given a modified architecture, interpret what its forwarding/stalling condition does.</li>
+            <li>Control hazards: branch prediction.</li>
+            <li>1-bit branch predictor, 2-bit branch predictor, static branch predictor &mdash; know all three.</li>
+            <li>Tournament predictor: know roughly what it is (not in depth).</li>
+            <li>Clock rate for a pipeline = determined by the critical <strong>stage</strong> (not critical path).</li>
+            <li>Given a custom pipeline with its own specs, calculate timing and cycle count for a program.</li>
+            <li>When is pipelining better vs. worse than single cycle, multicycle, or microcoded?</li>
+          </ul>
+
+          <h3>Interrupts / exceptions</h3>
+          <ul>
+            <li>Know what an interrupt is.</li>
+            <li>Given a scenario, recognize that interrupts or exceptions are the right solution.</li>
+          </ul>
+
+          <h3>Fixed and floating point</h3>
+          <ul>
+            <li>Convert numbers to fixed and floating point.</li>
+            <li>Know the issues and limitations of both (rounding, overflow, precision, and so on).</li>
+            <li>Do <strong>not</strong> memorize IEEE 754 &mdash; Shankar will provide the format or invent one for the test.</li>
+          </ul>
+
+          <h3>Modern CPU architectures (brief)</h3>
+          <ul>
+            <li>You may see a picture and a question &mdash; know the rough idea.</li>
+          </ul>
+        </div>
+
+        <h2 class="section-title section-title--follow" id="exam-parts-heading">How the exam is split</h2>
+        <div class="parts-grid" role="region" aria-labelledby="exam-parts-heading">
+          <div class="part-box part-box--a">
+            <div class="meta">Part A &middot; May 19 &middot; 75 min</div>
+            <h3>Everything above except two design questions</h3>
+            <p>Big-picture comparisons, performance analysis, hazard identification, branch prediction, floating point, pipelining cycle counts, interrupt concepts.</p>
+          </div>
+          <div class="part-box part-box--b">
+            <div class="meta">Part B &middot; May 26 &middot; ~60 min</div>
+            <h3>Two design questions only</h3>
+            <ul>
+              <li><strong>Q1:</strong> Implement a given instruction on the single-cycle datapath (data + control).</li>
+              <li><strong>Q2:</strong> Implement a given instruction on the multicycle datapath.</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   </main>
